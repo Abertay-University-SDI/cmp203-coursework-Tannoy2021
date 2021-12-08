@@ -16,6 +16,10 @@
 #include "SOIL.h"
 #include <vector>
 #include "Shadow.h"
+#include "Camera.h"
+#include "Disk.h"
+#include "Sphere.h"
+#include "Cylinder.h"
 
 
 class Scene{
@@ -54,6 +58,12 @@ protected:
 	int frame = 0, time, timebase = 0;
 	char fps[40];
 	char mouseText[40];
+
+	Camera Camera;
+	GLuint Grass;
+	Disk Disk;
+	Sphere Sphere;
+	Cylinder Cylinder;
 
 };
 

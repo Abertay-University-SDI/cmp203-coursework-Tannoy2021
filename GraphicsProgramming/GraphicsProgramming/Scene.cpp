@@ -10,20 +10,25 @@ Scene::Scene(Input *in)
 
 	// Other OpenGL / render setting should be applied here.
 	
-
+	Grass = SOIL_load_OGL_texture("gfx/grass.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
+	glEnable(GL_TEXTURE_2D);
+	glTexEnvf(GL_TEXTURE, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	// Initialise scene variables
+	/*Disk.Calculate(1, 50);*/
 	
 }
 
 void Scene::handleInput(float dt)
 {
+	Camera.handleInput(dt, input, width, height);
+	glutWarpPointer(width / 2, height / 2);
 	// Handle user input
 }
 
 void Scene::update(float dt)
 {
 	// update scene related variables.
-
+	Camera.update(dt);
 	// Calculate FPS for output
 	calculateFPS();
 }
@@ -36,11 +41,122 @@ void Scene::render() {
 	// Reset transformations
 	glLoadIdentity();
 	// Set the camera
-	gluLookAt(0.0f, 0.0f, 6.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+	gluLookAt(
+		Camera.GetPossition().x, Camera.GetPossition().y, Camera.GetPossition().z,
+		Camera.GetLook_At().x, Camera.GetLook_At().y, Camera.GetLook_At().z,
+		Camera.GetUp().x, Camera.GetUp().y, Camera.GetUp().z);
 	
 	// Render geometry/scene here -------------------------------------
 	
+	glBindTexture(GL_TEXTURE_2D, Grass);
 
+	glBegin(GL_QUADS);
+
+		//Front
+
+		glNormal3f(0, 0, 1);
+
+		glTexCoord2f(.25, .5);
+		glVertex3f(-1, -1, 1);
+
+		glTexCoord2f(.5, .5);
+		glVertex3f(1, -1, 1);
+
+		glTexCoord2f(.5, .25);
+		glVertex3f(1, 1, 1);
+
+		glTexCoord2f(.25, .25);
+		glVertex3f(-1, 1, 1);
+
+		//Left
+		glNormal3f(-1, 0, 0);
+
+		glTexCoord2f(0, .5);
+		glVertex3f(-1, -1, -1);
+
+		glTexCoord2f(.25, .5);
+		glVertex3f(-1, -1, 1);
+
+		glTexCoord2f(.25, .25);
+		glVertex3f(-1, 1, 1);
+
+		glTexCoord2f(0, .25);
+		glVertex3f(-1, 1, -1);
+
+		//Back
+		glNormal3f(0, 0, -1);
+
+		glTexCoord2f(1, .5);
+		glVertex3f(-1, -1, -1);
+
+		glTexCoord2f(.75, .5);
+		glVertex3f(1, -1, -1);
+
+		glTexCoord2f(.75, .25);
+		glVertex3f(1, 1, -1);
+
+		glTexCoord2f(1, .25);
+		glVertex3f(-1, 1, -1);
+
+		//Right
+		glNormal3f(1, 0, 0);
+
+		glTexCoord2f(.75, .5);
+		glVertex3f(1, -1, -1);
+
+		glTexCoord2f(.5, .5);
+		glVertex3f(1, -1, 1);
+
+		glTexCoord2f(.5, .25);
+		glVertex3f(1, 1, 1);
+
+		glTexCoord2f(.75, .25);
+		glVertex3f(1, 1, -1);
+
+		//Top
+		glNormal3f(0, 1, 0);
+
+		glTexCoord2f(.25, 0);
+		glVertex3f(-1, 1, -1);
+
+		glTexCoord2f(.5, 0);
+		glVertex3f(1, 1, -1);
+
+		glTexCoord2f(.5, 0.25);
+		glVertex3f(1, 1, 1);
+
+		glTexCoord2f(.25, 0.25);
+		glVertex3f(-1, 1, 1);
+
+		//Down
+		glNormal3f(0, -1, 0);
+
+		glTexCoord2f(.25, .75);
+		glVertex3f(-1, -1, -1);
+
+		glTexCoord2f(.5, .75);
+		glVertex3f(1, -1, -1);
+
+		glTexCoord2f(.5, .5);
+		glVertex3f(1, -1, 1);
+
+		glTexCoord2f(.25, .5);
+		glVertex3f(-1, -1, 1);
+
+		glEnd();
+
+		glTranslatef(5, 5, 0);
+		Disk.Render();
+		glPopMatrix();
+		glTranslatef(0, -5, 0);
+		Disk.Render();
+		glTranslatef(-5, 5, 0);
+		Sphere.Render(2,10,10);
+		glTranslatef(-5, 0, 0);
+		Cylinder.Render(1, 2, 6);
+		glTranslatef(0, -5, 0);
+		Disk.Calculate(1, 50);
+		Disk.Render();
 
 	// End render geometry --------------------------------------
 
