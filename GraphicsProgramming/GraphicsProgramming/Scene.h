@@ -20,6 +20,7 @@
 #include "Disk.h"
 #include "Sphere.h"
 #include "Cylinder.h"
+#include "Model.h"
 
 
 class Scene{
@@ -64,6 +65,7 @@ protected:
 	Disk Disk;
 	Sphere Sphere;
 	Cylinder Cylinder;
+	Model My_model;
 
 };
 

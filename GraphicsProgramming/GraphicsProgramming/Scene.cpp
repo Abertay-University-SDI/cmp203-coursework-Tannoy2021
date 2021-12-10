@@ -9,9 +9,14 @@ Scene::Scene(Input *in)
 	initialiseOpenGL();
 
 	// Other OpenGL / render setting should be applied here.
-	
+	if (!My_model.load("models/teapot.obj", "gfx/crate.png"))
+	{
+		printf(" uh oh pee pee poo poo");
+	}
+
+
 	Grass = SOIL_load_OGL_texture("gfx/grass.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
-	glEnable(GL_TEXTURE_2D);
+	
 	glTexEnvf(GL_TEXTURE, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	// Initialise scene variables
 	/*Disk.Calculate(1, 50);*/
@@ -157,6 +162,8 @@ void Scene::render() {
 		glTranslatef(0, -5, 0);
 		Disk.Calculate(1, 50);
 		Disk.Render();
+		glTranslatef(-5, -5, 0);
+		My_model.render();
 
 	// End render geometry --------------------------------------
 
