@@ -30,7 +30,7 @@ public:
 	// Main render function
 	void render();
 	// Handle input function that receives delta time from parent.
-	void handleInput(float dt);
+	void handleInput(float dt,Input* in);
 	// Update function receives delta time from parent (used for frame independent updating).
 	void update(float dt);
 	// Resizes the OpenGL output based on new window size.
@@ -61,11 +61,20 @@ protected:
 	char mouseText[40];
 
 	Camera Camera;
+	GLuint Crate;
 	GLuint Grass;
 	Disk Disk;
 	Sphere Sphere;
 	Cylinder Cylinder;
 	Model My_model;
+
+	int Seg = 1;
+	float Size = 0.1;
+	float ButtonMove = 0.005f;
+	float TimePassed = 3.f;
+	float ButtonTime = 0.3f;
+	bool SphereBool = false;
+
 
 };
 

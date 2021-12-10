@@ -15,7 +15,8 @@ Scene::Scene(Input *in)
 	}
 
 
-	Grass = SOIL_load_OGL_texture("gfx/grass.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
+	Grass = SOIL_load_OGL_texture("gfx/checked.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
+	Crate = SOIL_load_OGL_texture("gfx/crate.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
 	
 	glTexEnvf(GL_TEXTURE, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	// Initialise scene variables
@@ -23,19 +24,48 @@ Scene::Scene(Input *in)
 	
 }
 
-void Scene::handleInput(float dt)
+void Scene::handleInput(float dt,Input* in)
 {
 	Camera.handleInput(dt, input, width, height);
 	glutWarpPointer(width / 2, height / 2);
 	// Handle user input
+	if (in->isKeyDown('x'))
+	{
+		SphereBool = true;
+	}
 }
 
 void Scene::update(float dt)
 {
 	// update scene related variables.
 	Camera.update(dt);
-	// Calculate FPS for output
-	calculateFPS();
+	if (SphereBool == true)
+	{
+		TimePassed -= dt;
+		ButtonTime -= dt;
+		if (TimePassed <= 0)
+		{
+			if (Seg < 20)
+			{
+				Seg++;
+			}
+			if (Size < 0.5)
+			{
+				Size += 0.05;
+			}
+			TimePassed = 3.f;
+		}
+		if (ButtonTime <= 0)
+		{
+			if (ButtonMove < 0.05)
+			{
+				ButtonMove += 0.005;
+			}
+			ButtonTime = 0.3f;
+		}
+		// Calculate FPS for output
+		calculateFPS();
+	}
 }
 
 void Scene::render() {
@@ -52,118 +82,158 @@ void Scene::render() {
 		Camera.GetUp().x, Camera.GetUp().y, Camera.GetUp().z);
 	
 	// Render geometry/scene here -------------------------------------
-	
+	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, Grass);
+	/*glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);*/
 
-	glBegin(GL_QUADS);
+	glPushMatrix();
+	Sphere.Render(Size, Seg, Seg);
+	glPopMatrix();
 
-		//Front
+	glPushMatrix();
+	glBindTexture(GL_TEXTURE_2D, Crate);
+	glTranslatef(-2, -ButtonMove, 0);
+	glRotatef(90, 1, 0, 0);
+	glScalef(0.1, 0.1, 0.1);
+	Cylinder.Render(1,1,6);
+	glDisable(GL_TEXTURE_2D);
+	glPopMatrix();
 
-		glNormal3f(0, 0, 1);
+	
 
-		glTexCoord2f(.25, .5);
-		glVertex3f(-1, -1, 1);
 
-		glTexCoord2f(.5, .5);
-		glVertex3f(1, -1, 1);
 
-		glTexCoord2f(.5, .25);
-		glVertex3f(1, 1, 1);
+	glPushMatrix();
+	glTranslatef(2, 0, 0);
+	glRotatef(0, 0, 0, 0);
+	Sphere.Render(0.5, 5, 5);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0, -2, 0);
+	for (float h = -2; h < 2; h += 0.1)
+	{
+		for (float i = -2; i < 2; i += 0.1)
+		{
+			glBegin(GL_QUADS);
+			glColor3f(1, 0, 1);
+				glVertex3f(i + .1, 0.0f, h + .1);
+				glVertex3f(i + .1, 0.0f, h);
+				glVertex3f(i, 0.0f, h);
+				glVertex3f(i, 0.0f, h + .1);
+				glEnd();
+		}
+	}
+	glPopMatrix();
 
-		glTexCoord2f(.25, .25);
-		glVertex3f(-1, 1, 1);
+	//glBegin(GL_QUADS);
 
-		//Left
-		glNormal3f(-1, 0, 0);
+	//	//Front
+	//	glNormal3f(0, 0, 1);
 
-		glTexCoord2f(0, .5);
-		glVertex3f(-1, -1, -1);
+	//	glTexCoord2f(.25, .5);
+	//	glVertex3f(-1, -1, 1);
 
-		glTexCoord2f(.25, .5);
-		glVertex3f(-1, -1, 1);
+	//	glTexCoord2f(.5, .5);
+	//	glVertex3f(1, -1, 1);
 
-		glTexCoord2f(.25, .25);
-		glVertex3f(-1, 1, 1);
+	//	glTexCoord2f(.5, .25);
+	//	glVertex3f(1, 1, 1);
 
-		glTexCoord2f(0, .25);
-		glVertex3f(-1, 1, -1);
+	//	glTexCoord2f(.25, .25);
+	//	glVertex3f(-1, 1, 1);
 
-		//Back
-		glNormal3f(0, 0, -1);
+	//	//Left
+	//	glNormal3f(-1, 0, 0);
 
-		glTexCoord2f(1, .5);
-		glVertex3f(-1, -1, -1);
+	//	glTexCoord2f(0, .5);
+	//	glVertex3f(-1, -1, -1);
 
-		glTexCoord2f(.75, .5);
-		glVertex3f(1, -1, -1);
+	//	glTexCoord2f(.25, .5);
+	//	glVertex3f(-1, -1, 1);
 
-		glTexCoord2f(.75, .25);
-		glVertex3f(1, 1, -1);
+	//	glTexCoord2f(.25, .25);
+	//	glVertex3f(-1, 1, 1);
 
-		glTexCoord2f(1, .25);
-		glVertex3f(-1, 1, -1);
+	//	glTexCoord2f(0, .25);
+	//	glVertex3f(-1, 1, -1);
 
-		//Right
-		glNormal3f(1, 0, 0);
+	//	//Back
+	//	glNormal3f(0, 0, -1);
 
-		glTexCoord2f(.75, .5);
-		glVertex3f(1, -1, -1);
+	//	glTexCoord2f(1, .5);
+	//	glVertex3f(-1, -1, -1);
 
-		glTexCoord2f(.5, .5);
-		glVertex3f(1, -1, 1);
+	//	glTexCoord2f(.75, .5);
+	//	glVertex3f(1, -1, -1);
 
-		glTexCoord2f(.5, .25);
-		glVertex3f(1, 1, 1);
+	//	glTexCoord2f(.75, .25);
+	//	glVertex3f(1, 1, -1);
 
-		glTexCoord2f(.75, .25);
-		glVertex3f(1, 1, -1);
+	//	glTexCoord2f(1, .25);
+	//	glVertex3f(-1, 1, -1);
 
-		//Top
-		glNormal3f(0, 1, 0);
+	//	//Right
+	//	glNormal3f(1, 0, 0);
 
-		glTexCoord2f(.25, 0);
-		glVertex3f(-1, 1, -1);
+	//	glTexCoord2f(.75, .5);
+	//	glVertex3f(1, -1, -1);
 
-		glTexCoord2f(.5, 0);
-		glVertex3f(1, 1, -1);
+	//	glTexCoord2f(.5, .5);
+	//	glVertex3f(1, -1, 1);
 
-		glTexCoord2f(.5, 0.25);
-		glVertex3f(1, 1, 1);
+	//	glTexCoord2f(.5, .25);
+	//	glVertex3f(1, 1, 1);
 
-		glTexCoord2f(.25, 0.25);
-		glVertex3f(-1, 1, 1);
+	//	glTexCoord2f(.75, .25);
+	//	glVertex3f(1, 1, -1);
 
-		//Down
-		glNormal3f(0, -1, 0);
+	//	//Top
+	//	glNormal3f(0, 1, 0);
 
-		glTexCoord2f(.25, .75);
-		glVertex3f(-1, -1, -1);
+	//	glTexCoord2f(.25, 0);
+	//	glVertex3f(-1, 1, -1);
 
-		glTexCoord2f(.5, .75);
-		glVertex3f(1, -1, -1);
+	//	glTexCoord2f(.5, 0);
+	//	glVertex3f(1, 1, -1);
 
-		glTexCoord2f(.5, .5);
-		glVertex3f(1, -1, 1);
+	//	glTexCoord2f(.5, 0.25);
+	//	glVertex3f(1, 1, 1);
 
-		glTexCoord2f(.25, .5);
-		glVertex3f(-1, -1, 1);
+	//	glTexCoord2f(.25, 0.25);
+	//	glVertex3f(-1, 1, 1);
 
-		glEnd();
+	//	//Down
+	//	glNormal3f(0, -1, 0);
 
-		glTranslatef(5, 5, 0);
-		Disk.Render();
-		glPopMatrix();
-		glTranslatef(0, -5, 0);
-		Disk.Render();
-		glTranslatef(-5, 5, 0);
-		Sphere.Render(2,10,10);
-		glTranslatef(-5, 0, 0);
-		Cylinder.Render(1, 2, 6);
-		glTranslatef(0, -5, 0);
-		Disk.Calculate(1, 50);
-		Disk.Render();
-		glTranslatef(-5, -5, 0);
-		My_model.render();
+	//	glTexCoord2f(.25, .75);
+	//	glVertex3f(-1, -1, -1);
+
+	//	glTexCoord2f(.5, .75);
+	//	glVertex3f(1, -1, -1);
+
+	//	glTexCoord2f(.5, .5);
+	//	glVertex3f(1, -1, 1);
+
+	//	glTexCoord2f(.25, .5);
+
+	//	glVertex3f(-1, -1, 1);
+
+	//	glEnd();
+
+	//	glTranslatef(5, 5, 0);
+	//	Disk.Render();
+	//	glPopMatrix();
+	//	glTranslatef(0, -5, 0);
+	//	Disk.Render();
+	//	glTranslatef(-5, 5, 0);
+	//	Sphere.Render(2,10,10);
+	//	glTranslatef(-5, 0, 0);
+	//	Cylinder.Render(1, 2, 6);
+	//	glTranslatef(0, -5, 0);
+	//	Disk.Calculate(1, 50);
+	//	Disk.Render();
+	//	glTranslatef(-5, -5, 0);
+	//	My_model.render();
 
 	// End render geometry --------------------------------------
 

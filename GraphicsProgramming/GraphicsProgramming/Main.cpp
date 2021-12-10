@@ -37,7 +37,7 @@ void renderScene(void)
 	deltaTime = deltaTime / 1000.0f;
 
 	// Update Scene and render next frame.
-	scene->handleInput(deltaTime);
+	scene->handleInput(deltaTime, input);
 	scene->update(deltaTime);
 	scene->render();
 }
