@@ -9,7 +9,7 @@ Scene::Scene(Input *in)
 	initialiseOpenGL();
 
 	// Other OpenGL / render setting should be applied here.
-	if (!My_model.load("models/teapot.obj", "gfx/crate.png"))
+	if (!My_model.load("models/breakables_ground.obj", "models/breakables_ground_c.png"))
 	{
 		printf(" uh oh pee pee poo poo");
 	}
@@ -17,7 +17,7 @@ Scene::Scene(Input *in)
 
 	Grass = SOIL_load_OGL_texture("gfx/checked.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
 	Crate = SOIL_load_OGL_texture("gfx/crate.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
-	
+	Block = SOIL_load_OGL_texture("models/breakables_ground_c.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
 	glTexEnvf(GL_TEXTURE, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	// Initialise scene variables
 	/*Disk.Calculate(1, 50);*/
@@ -241,8 +241,26 @@ void Scene::render() {
 	//	Disk.Calculate(1, 50);
 	//	Disk.Render();
 	//	glTranslatef(-5, -5, 0);
-	//	My_model.render();
-
+glPushMatrix();
+glEnable(GL_TEXTURE_2D);
+glBindTexture(GL_TEXTURE_2D, Block);
+glColor3f(1,1,1);
+glTranslatef(0, -1, 0);
+glScalef(0.005,0.005,0.005);
+	My_model.render();
+	glPopMatrix();
+	for (int Xside = 0; Xside < 5; Xside++)
+	{
+		for (int Zside = 0; Zside < 5; Zside++)
+		{
+			glPushMatrix();
+			glTranslatef(Xside * 20, 0, Zside);
+			glScalef(0.005, 0.005, 0.005);
+			My_model.render();
+			glPopMatrix();
+			
+		}
+	}
 	// End render geometry --------------------------------------
 
 	// Render text, should be last object rendered.

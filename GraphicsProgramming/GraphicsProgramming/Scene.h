@@ -63,6 +63,7 @@ protected:
 	Camera Camera;
 	GLuint Crate;
 	GLuint Grass;
+	GLuint Block;
 	Disk Disk;
 	Sphere Sphere;
 	Cylinder Cylinder;
