@@ -2,9 +2,9 @@
 
 Camera::Camera()
 {
-	Possition = Vector3(0, -6, 0);
-	Look_At = Vector3(0, 60, 0);
-	Up = Vector3(0, 1, 60);
+	Possition = Vector3(0, 0, 6);
+	Look_At = Vector3(0, 0, 0);
+	Up = Vector3(0, 1, 0);
 	Forward = Vector3(0, 0, 0);
 	Right = Vector3(0, 0, 0);
 	yaw = 0;

@@ -26,8 +26,11 @@ Scene::Scene(Input *in)
 
 void Scene::handleInput(float dt,Input* in)
 {
-	Camera.handleInput(dt, input, width, height);
-	glutWarpPointer(width / 2, height / 2);
+	if (CameraTrue == true)
+	{
+		Camera.handleInput(dt, input, width, height);
+		glutWarpPointer(width / 2, height / 2);
+	}
 	// Handle user input
 	if (in->isKeyDown('x'))
 	{
@@ -39,6 +42,11 @@ void Scene::update(float dt)
 {
 	// update scene related variables.
 	Camera.update(dt);
+	CameraLoad -= dt;
+	if (CameraLoad <= 0)
+	{
+		CameraTrue = true;
+	}
 	if (SphereBool == true)
 	{
 		TimePassed -= dt;
@@ -53,7 +61,7 @@ void Scene::update(float dt)
 			{
 				Size += 0.05;
 			}
-			TimePassed = 3.f;
+			TimePassed = 1.f;
 		}
 		if (ButtonTime <= 0)
 		{

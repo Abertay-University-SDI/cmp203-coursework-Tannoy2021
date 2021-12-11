@@ -74,7 +74,8 @@ protected:
 	float TimePassed = 3.f;
 	float ButtonTime = 0.3f;
 	bool SphereBool = false;
-
+	float CameraLoad = 0.5f;
+	bool CameraTrue = false;
 
 };
 
