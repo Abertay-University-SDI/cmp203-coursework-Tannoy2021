@@ -77,7 +77,6 @@ protected:
 	bool SphereBool = false;
 	float CameraLoad = 0.5f;
 	bool CameraTrue = false;
-
 };
 
 #endif

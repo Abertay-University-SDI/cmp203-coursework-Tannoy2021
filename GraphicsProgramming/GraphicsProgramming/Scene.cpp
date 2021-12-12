@@ -107,31 +107,28 @@ void Scene::render() {
 	glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
 
-	
-
-
 
 	glPushMatrix();
 	glTranslatef(2, 0, 0);
 	glRotatef(0, 0, 0, 0);
 	Sphere.Render(0.5, 5, 5);
 	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(0, -2, 0);
-	for (float h = -2; h < 2; h += 0.1)
-	{
-		for (float i = -2; i < 2; i += 0.1)
+
+		for (int Xside = 0; Xside < 10; Xside++)
 		{
-			glBegin(GL_QUADS);
-			glColor3f(1, 0, 1);
-				glVertex3f(i + .1, 0.0f, h + .1);
-				glVertex3f(i + .1, 0.0f, h);
-				glVertex3f(i, 0.0f, h);
-				glVertex3f(i, 0.0f, h + .1);
-				glEnd();
+			glEnable(GL_TEXTURE_2D);
+			glBindTexture(GL_TEXTURE_2D, Block);
+			glColor3f(1, 1, 1);
+			for (int Zside = 0; Zside < 10; Zside++)
+			{
+				glPushMatrix();
+				glTranslatef(-2 + Xside  , -2,0 + Zside);
+				glScalef(0.0067, 0.002, 0.0067);
+				My_model.render();
+				glPopMatrix();
+			}
 		}
-	}
-	glPopMatrix();
+
 
 	//glBegin(GL_QUADS);
 
@@ -241,26 +238,6 @@ void Scene::render() {
 	//	Disk.Calculate(1, 50);
 	//	Disk.Render();
 	//	glTranslatef(-5, -5, 0);
-glPushMatrix();
-glEnable(GL_TEXTURE_2D);
-glBindTexture(GL_TEXTURE_2D, Block);
-glColor3f(1,1,1);
-glTranslatef(0, -1, 0);
-glScalef(0.005,0.005,0.005);
-	My_model.render();
-	glPopMatrix();
-	for (int Xside = 0; Xside < 5; Xside++)
-	{
-		for (int Zside = 0; Zside < 5; Zside++)
-		{
-			glPushMatrix();
-			glTranslatef(Xside * 20, 0, Zside);
-			glScalef(0.005, 0.005, 0.005);
-			My_model.render();
-			glPopMatrix();
-			
-		}
-	}
 	// End render geometry --------------------------------------
 
 	// Render text, should be last object rendered.
