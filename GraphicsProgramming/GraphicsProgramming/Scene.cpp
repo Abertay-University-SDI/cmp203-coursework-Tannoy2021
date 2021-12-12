@@ -146,110 +146,113 @@ void Scene::render() {
 	glBindTexture(GL_TEXTURE_2D, Grass);
 	/*glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);*/
 
-	//glPushMatrix();
-	//glEnable(GL_DEPTH_TEST);
-	//glTranslatef(Camera.GetPossition().x, Camera.GetPossition().y, Camera.GetPossition().z);
-	//glDisable(GL_DEPTH_TEST);
-	//glBindTexture(GL_TEXTURE_2D, Skybox);
-	//glColor3f(1, 1, 1);
+	glPushMatrix();
+	glEnable(GL_DEPTH_TEST);
+	glTranslatef(Camera.GetPossition().x, Camera.GetPossition().y, Camera.GetPossition().z);
+	glDisable(GL_DEPTH_TEST);
+	glBindTexture(GL_TEXTURE_2D, Skybox);
+	glColor3f(1, 1, 1);
 
-	//glBegin(GL_QUADS);
+	glBegin(GL_QUADS);
 
-	////Front
+	//Front
 
-	//glNormal3f(0, 0, 1);
+	glNormal3f(0, 0, 1);
 
-	//glTexCoord2f(.25, .5);
-	//glVertex3f(-1, -1, 1);
+	glTexCoord2f(.25, .5);
+	glVertex3f(-1, -1, 1);
 
-	//glTexCoord2f(.5, .5);
-	//glVertex3f(1, -1, 1);
+	glTexCoord2f(.5, .5);
+	glVertex3f(1, -1, 1);
 
-	//glTexCoord2f(.5, .25);
-	//glVertex3f(1, 1, 1);
+	glTexCoord2f(.5, .25);
+	glVertex3f(1, 1, 1);
 
-	//glTexCoord2f(.25, .25);
-	//glVertex3f(-1, 1, 1);
+	glTexCoord2f(.25, .25);
+	glVertex3f(-1, 1, 1);
 
-	////Left
-	//glNormal3f(-1, 0, 0);
+	//Left
+	glNormal3f(-1, 0, 0);
 
-	//glTexCoord2f(0, .5);
-	//glVertex3f(-1, -1, -1);
+	glTexCoord2f(0, .5);
+	glVertex3f(-1, -1, -1);
 
-	//glTexCoord2f(.25, .5);
-	//glVertex3f(-1, -1, 1);
+	glTexCoord2f(.25, .5);
+	glVertex3f(-1, -1, 1);
 
-	//glTexCoord2f(.25, .25);
-	//glVertex3f(-1, 1, 1);
+	glTexCoord2f(.25, .25);
+	glVertex3f(-1, 1, 1);
 
-	//glTexCoord2f(0, .25);
-	//glVertex3f(-1, 1, -1);
+	glTexCoord2f(0, .25);
+	glVertex3f(-1, 1, -1);
 
-	////Back
-	//glNormal3f(0, 0, -1);
+	//Back
+	glNormal3f(0, 0, -1);
 
-	//glTexCoord2f(1, .5);
-	//glVertex3f(-1, -1, -1);
+	glTexCoord2f(1, .5);
+	glVertex3f(-1, -1, -1);
 
-	//glTexCoord2f(.75, .5);
-	//glVertex3f(1, -1, -1);
+	glTexCoord2f(.75, .5);
+	glVertex3f(1, -1, -1);
 
-	//glTexCoord2f(.75, .25);
-	//glVertex3f(1, 1, -1);
+	glTexCoord2f(.75, .25);
+	glVertex3f(1, 1, -1);
 
-	//glTexCoord2f(1, .25);
-	//glVertex3f(-1, 1, -1);
+	glTexCoord2f(1, .25);
+	glVertex3f(-1, 1, -1);
 
-	////Right
-	//glNormal3f(1, 0, 0);
+	//Right
+	glNormal3f(1, 0, 0);
 
-	//glTexCoord2f(.75, .5);
-	//glVertex3f(1, -1, -1);
+	glTexCoord2f(.75, .5);
+	glVertex3f(1, -1, -1);
 
-	//glTexCoord2f(.5, .5);
-	//glVertex3f(1, -1, 1);
+	glTexCoord2f(.5, .5);
+	glVertex3f(1, -1, 1);
 
-	//glTexCoord2f(.5, .25);
-	//glVertex3f(1, 1, 1);
+	glTexCoord2f(.5, .25);
+	glVertex3f(1, 1, 1);
 
-	//glTexCoord2f(.75, .25);
-	//glVertex3f(1, 1, -1);
+	glTexCoord2f(.75, .25);
+	glVertex3f(1, 1, -1);
 
-	////Top
-	//glNormal3f(0, 1, 0);
+	//Top
+	glNormal3f(0, 1, 0);
 
-	//glTexCoord2f(.25, 0);
-	//glVertex3f(-1, 1, -1);
+	glTexCoord2f(.25, 0);
+	glVertex3f(-1, 1, -1);
 
-	//glTexCoord2f(.5, 0);
-	//glVertex3f(1, 1, -1);
+	glTexCoord2f(.5, 0);
+	glVertex3f(1, 1, -1);
 
-	//glTexCoord2f(.5, 0.25);
-	//glVertex3f(1, 1, 1);
+	glTexCoord2f(.5, 0.25);
+	glVertex3f(1, 1, 1);
 
-	//glTexCoord2f(.25, 0.25);
-	//glVertex3f(-1, 1, 1);
+	glTexCoord2f(.25, 0.25);
+	glVertex3f(-1, 1, 1);
 
-	////Down
-	//glNormal3f(0, -1, 0);
+	//Down
+	glNormal3f(0, -1, 0);
 
-	//glTexCoord2f(.25, .75);
-	//glVertex3f(-1, -1, -1);
+	glTexCoord2f(.25, .75);
+	glVertex3f(-1, -1, -1);
 
-	//glTexCoord2f(.5, .75);
-	//glVertex3f(1, -1, -1);
+	glTexCoord2f(.5, .75);
+	glVertex3f(1, -1, -1);
 
-	//glTexCoord2f(.5, .5);
-	//glVertex3f(1, -1, 1);
+	glTexCoord2f(.5, .5);
+	glVertex3f(1, -1, 1);
 
-	//glTexCoord2f(.25, .5);
-	//glVertex3f(-1, -1, 1);
+	glTexCoord2f(.25, .5);
+	glVertex3f(-1, -1, 1);
 
-	//glEnd();
-	//glPopMatrix();
+	glEnd();
+	glEnable(GL_DEPTH_TEST);
+
+	glPopMatrix();
 
 	glPushMatrix();
+	glBindTexture(GL_TEXTURE_2D, Grass);
 	glDisable(GL_COLOR_MATERIAL);
 	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE,mat_ambient_colour);
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
@@ -385,114 +388,7 @@ void Scene::render() {
 			}
 		}
 
-	//glBegin(GL_QUADS);
 
-	//	//Front
-	//	glNormal3f(0, 0, 1);
-
-	//	glTexCoord2f(.25, .5);
-	//	glVertex3f(-1, -1, 1);
-
-	//	glTexCoord2f(.5, .5);
-	//	glVertex3f(1, -1, 1);
-
-	//	glTexCoord2f(.5, .25);
-	//	glVertex3f(1, 1, 1);
-
-	//	glTexCoord2f(.25, .25);
-	//	glVertex3f(-1, 1, 1);
-
-	//	//Left
-	//	glNormal3f(-1, 0, 0);
-
-	//	glTexCoord2f(0, .5);
-	//	glVertex3f(-1, -1, -1);
-
-	//	glTexCoord2f(.25, .5);
-	//	glVertex3f(-1, -1, 1);
-
-	//	glTexCoord2f(.25, .25);
-	//	glVertex3f(-1, 1, 1);
-
-	//	glTexCoord2f(0, .25);
-	//	glVertex3f(-1, 1, -1);
-
-	//	//Back
-	//	glNormal3f(0, 0, -1);
-
-	//	glTexCoord2f(1, .5);
-	//	glVertex3f(-1, -1, -1);
-
-	//	glTexCoord2f(.75, .5);
-	//	glVertex3f(1, -1, -1);
-
-	//	glTexCoord2f(.75, .25);
-	//	glVertex3f(1, 1, -1);
-
-	//	glTexCoord2f(1, .25);
-	//	glVertex3f(-1, 1, -1);
-
-	//	//Right
-	//	glNormal3f(1, 0, 0);
-
-	//	glTexCoord2f(.75, .5);
-	//	glVertex3f(1, -1, -1);
-
-	//	glTexCoord2f(.5, .5);
-	//	glVertex3f(1, -1, 1);
-
-	//	glTexCoord2f(.5, .25);
-	//	glVertex3f(1, 1, 1);
-
-	//	glTexCoord2f(.75, .25);
-	//	glVertex3f(1, 1, -1);
-
-	//	//Top
-	//	glNormal3f(0, 1, 0);
-
-	//	glTexCoord2f(.25, 0);
-	//	glVertex3f(-1, 1, -1);
-
-	//	glTexCoord2f(.5, 0);
-	//	glVertex3f(1, 1, -1);
-
-	//	glTexCoord2f(.5, 0.25);
-	//	glVertex3f(1, 1, 1);
-
-	//	glTexCoord2f(.25, 0.25);
-	//	glVertex3f(-1, 1, 1);
-
-	//	//Down
-	//	glNormal3f(0, -1, 0);
-
-	//	glTexCoord2f(.25, .75);
-	//	glVertex3f(-1, -1, -1);
-
-	//	glTexCoord2f(.5, .75);
-	//	glVertex3f(1, -1, -1);
-
-	//	glTexCoord2f(.5, .5);
-	//	glVertex3f(1, -1, 1);
-
-	//	glTexCoord2f(.25, .5);
-
-	//	glVertex3f(-1, -1, 1);
-
-	//	glEnd();
-
-	//	glTranslatef(5, 5, 0);
-	//	Disk.Render();
-	//	glPopMatrix();
-	//	glTranslatef(0, -5, 0);
-	//	Disk.Render();
-	//	glTranslatef(-5, 5, 0);
-	//	Sphere.Render(2,10,10);
-	//	glTranslatef(-5, 0, 0);
-	//	Cylinder.Render(1, 2, 6);
-	//	glTranslatef(0, -5, 0);
-	//	Disk.Calculate(1, 50);
-	//	Disk.Render();
-	//	glTranslatef(-5, -5, 0);
 	// End render geometry --------------------------------------
 
 	// Render text, should be last object rendered.
