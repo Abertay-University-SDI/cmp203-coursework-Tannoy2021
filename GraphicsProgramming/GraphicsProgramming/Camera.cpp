@@ -2,7 +2,7 @@
 
 Camera::Camera()
 {
-	Possition = Vector3(0, 0, 6);
+	Possition = Vector3(0, 0, 4);
 	Look_At = Vector3(0, 0, 0);
 	Up = Vector3(0, 1, 0);
 	Forward = Vector3(0, 0, 0);

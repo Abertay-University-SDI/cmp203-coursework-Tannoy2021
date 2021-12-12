@@ -47,6 +47,7 @@ protected:
 
 	// draw primitive functions
 	
+	void drawCube();
 
 	// For access to user input.
 	Input* input;
@@ -64,6 +65,7 @@ protected:
 	GLuint Crate;
 	GLuint Grass;
 	GLuint Block;
+	GLuint Skybox;
 	Disk Disk;
 	Sphere Sphere;
 	Cylinder Cylinder;
@@ -77,13 +79,14 @@ protected:
 	bool SphereBool = false;
 	float CameraLoad = 0.5f;
 	bool CameraTrue = false;
+	bool EnableWireframe = false;
 
 
 	//Lights 
 
 	GLfloat Light_Ambient[4] = { 0.4f, 0.4f, 0.4f, 1.0f };
 	GLfloat Light_Diffuse[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
-	GLfloat Light_Position[4] = { -1.0f, 0.0f, 0.0f, 1.0f };
+	GLfloat Light_Position[4] = { 0.0f, -1.9f, 1.0f, 1.0f };
 	GLfloat Spot_Direcion[3] = { 0.0f, -1.0f,0.0f };
 
 
