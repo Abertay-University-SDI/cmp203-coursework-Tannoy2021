@@ -14,6 +14,11 @@ Scene::Scene(Input *in)
 		printf(" uh oh pee pee poo poo");
 	}
 
+	// Colour material overrides material values so disable it
+	
+	glEnable(GL_COLOR_MATERIAL);
+	glEnable(GL_LIGHTING);
+
 
 	Grass = SOIL_load_OGL_texture("gfx/checked.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
 	Crate = SOIL_load_OGL_texture("gfx/crate.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
@@ -88,19 +93,43 @@ void Scene::render() {
 		Camera.GetPossition().x, Camera.GetPossition().y, Camera.GetPossition().z,
 		Camera.GetLook_At().x, Camera.GetLook_At().y, Camera.GetLook_At().z,
 		Camera.GetUp().x, Camera.GetUp().y, Camera.GetUp().z);
+
+
+	//Diffuse plays the most important role in determining this colour
+		//• The diffuse material will interact with the light where the object is lit
+		//• Ambient materials affect the overall colour of the objectand is effected by the
+		//scene ambient light
+
+
+
+	glLightfv(GL_LIGHT0, GL_AMBIENT, Light_Ambient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, Light_Diffuse);
+	glLightfv(GL_LIGHT0, GL_POSITION, Light_Position);
+
+	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1.0);
+	glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.25);
+	glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.15);
+
+	//glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, Spot_Direcion);
+	//glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 25.0f);
+	//glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 50.0f);	
+
+	glEnable(GL_LIGHT0);
 	
+
 	// Render geometry/scene here -------------------------------------
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, Grass);
 	/*glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);*/
 
 	glPushMatrix();
+	glTranslatef(0, 0, 3);
 	Sphere.Render(Size, Seg, Seg);
 	glPopMatrix();
 
 	glPushMatrix();
 	glBindTexture(GL_TEXTURE_2D, Crate);
-	glTranslatef(-2, -ButtonMove, 0);
+	glTranslatef(-2, -ButtonMove, 3);
 	glRotatef(90, 1, 0, 0);
 	glScalef(0.1, 0.1, 0.1);
 	Cylinder.Render(1,1,6);
@@ -109,26 +138,58 @@ void Scene::render() {
 
 
 	glPushMatrix();
-	glTranslatef(2, 0, 0);
+	glTranslatef(2, 0, 3);
 	glRotatef(0, 0, 0, 0);
 	Sphere.Render(0.5, 5, 5);
 	glPopMatrix();
 
-		for (int Xside = 0; Xside < 10; Xside++)
+
+
+
+
+	// For Color materials have disable right after the push 
+	// and Enable right before the pop
+	// otherwise not only the nester for loop will have the color materials but everything before it aswell !
+		for (int Xside = 0; Xside < 7; Xside++)
 		{
 			glEnable(GL_TEXTURE_2D);
 			glBindTexture(GL_TEXTURE_2D, Block);
 			glColor3f(1, 1, 1);
-			for (int Zside = 0; Zside < 10; Zside++)
+			for (int Zside = 0; Zside < 5; Zside++)
 			{
 				glPushMatrix();
+				glDisable(GL_COLOR_MATERIAL);
 				glTranslatef(-2 + Xside  , -2,0 + Zside);
+				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_diff_red);
+				glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+				glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
+				glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
 				glScalef(0.0067, 0.002, 0.0067);
 				My_model.render();
+				glEnable(GL_COLOR_MATERIAL);
 				glPopMatrix();
 			}
 		}
-
+		for (int Xside = 0; Xside < 7; Xside++)
+		{
+			glEnable(GL_TEXTURE_2D);
+			glBindTexture(GL_TEXTURE_2D, Block);
+			glColor3f(1, 1, 1);
+			for (int Zside = 0; Zside < 4; Zside++)
+			{
+				glPushMatrix();
+				glDisable(GL_COLOR_MATERIAL);
+				glTranslatef(-2 + Xside, -1.57 + Zside, -0.33);
+				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_diff_red);
+				glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+				glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
+				glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
+				glScalef(0.0067, 0.0067, 0.002);
+				My_model.render();
+				glEnable(GL_COLOR_MATERIAL);
+				glPopMatrix();
+			}
+		}
 
 	//glBegin(GL_QUADS);
 

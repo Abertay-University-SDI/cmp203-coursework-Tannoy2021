@@ -77,6 +77,30 @@ protected:
 	bool SphereBool = false;
 	float CameraLoad = 0.5f;
 	bool CameraTrue = false;
+
+
+	//Lights 
+
+	GLfloat Light_Ambient[4] = { 0.4f, 0.4f, 0.4f, 1.0f };
+	GLfloat Light_Diffuse[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	GLfloat Light_Position[4] = { -1.0f, 0.0f, 0.0f, 1.0f };
+	GLfloat Spot_Direcion[3] = { 0.0f, -1.0f,0.0f };
+
+
+	//Materials 
+	GLfloat no_mat[4] = { 0.0, 0.0, 0.0, 0.0 };
+	GLfloat mat_ambient_colour[4] = { 0.8, 0.8, 0.2, 1.0 };
+	GLfloat mat_diff_red[4] = { 1.0, 0.0, 0.0, 1.0 };
+	GLfloat mat_diff_blue[4] = { 0.1, 0.5, 0.8, 1.0 };
+	GLfloat mat_specular[4] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat no_shininess = 0.0;
+	GLfloat low_shininess = 50;
+	GLfloat high_shininess = 100;
+	GLfloat mat_emission[4] = { 0.3, 0.2, 0.2, 0.0 };
+
+
+
+
 };
 
 #endif
