@@ -61,6 +61,7 @@ void Scene::handleInput(float dt,Input* in)
 
 void Scene::update(float dt)
 {
+
 	// update scene related variables.
 	if (EnableWireframe == true)
 	{
@@ -113,12 +114,12 @@ void Scene::render() {
 	// Reset transformations
 	glLoadIdentity();
 	// Set the camera
-	gluLookAt(
-		Camera.GetPossition().x, Camera.GetPossition().y, Camera.GetPossition().z,
-		Camera.GetLook_At().x, Camera.GetLook_At().y, Camera.GetLook_At().z,
-		Camera.GetUp().x, Camera.GetUp().y, Camera.GetUp().z);
 
-
+		gluLookAt(
+			Camera.GetPossition().x, Camera.GetPossition().y, Camera.GetPossition().z,
+			Camera.GetLook_At().x, Camera.GetLook_At().y, Camera.GetLook_At().z,
+			Camera.GetUp().x, Camera.GetUp().y, Camera.GetUp().z);
+	
 	//Diffuse plays the most important role in determining this colour
 		//• The diffuse material will interact with the light where the object is lit
 		//• Ambient materials affect the overall colour of the objectand is effected by the
@@ -248,7 +249,10 @@ void Scene::render() {
 
 	glEnd();
 	glEnable(GL_DEPTH_TEST);
+	glPopMatrix();
 
+	glPushMatrix();
+	
 	glPopMatrix();
 
 	glPushMatrix();
@@ -259,6 +263,30 @@ void Scene::render() {
 	glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
 	glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
 	glTranslatef(0, 0, 3);
+	Sphere.Render(Size, Seg, Seg);
+	glEnable(GL_COLOR_MATERIAL);
+	glPopMatrix();
+
+	glPushMatrix();
+	glBindTexture(GL_TEXTURE_2D, Grass);
+	glDisable(GL_COLOR_MATERIAL);
+	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+	glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
+	glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
+	glTranslatef(0, 0, 5);
+	Sphere.Render(Size, Seg, Seg);
+	glEnable(GL_COLOR_MATERIAL);
+	glPopMatrix();
+
+	glPushMatrix();
+	glBindTexture(GL_TEXTURE_2D, Grass);
+	glDisable(GL_COLOR_MATERIAL);
+	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+	glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
+	glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
+	glTranslatef(0, 6, 5);
 	Sphere.Render(Size, Seg, Seg);
 	glEnable(GL_COLOR_MATERIAL);
 	glPopMatrix();
@@ -286,12 +314,12 @@ void Scene::render() {
 			{
 				glPushMatrix();
 				glDisable(GL_COLOR_MATERIAL);
-				glTranslatef(-2 + Xside  , -2,0 + Zside);
+				glTranslatef(-2 + (Xside * 2)  , -2,0 + (Zside * 2));
 				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, no_mat);
 				glMaterialfv(GL_FRONT, GL_SPECULAR, no_mat);
 				glMateriali(GL_FRONT, GL_SHININESS, no_shininess);
 				glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
-				glScalef(0.0067, 0.002, 0.0067);
+				glScalef(0.0067*2, 0.003, 0.0067*2);
 				My_model.render();
 				glEnable(GL_COLOR_MATERIAL);
 				glPopMatrix();
@@ -304,16 +332,16 @@ void Scene::render() {
 			glEnable(GL_TEXTURE_2D);
 			glBindTexture(GL_TEXTURE_2D, Block);
 			glColor3f(1, 1, 1);
-			for (int Zside = 0; Zside < 4; Zside++)
+			for (int Zside = 0; Zside < 3; Zside++)
 			{
 				glPushMatrix();
 				glDisable(GL_COLOR_MATERIAL);
-				glTranslatef(-2 + Xside, -1.347 + Zside, -0.35);
+				glTranslatef(-2 + (Xside * 2), -0.847 + (Zside * 2), -0.75);
 				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, no_mat);
 				glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 				glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
 				glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
-				glScalef(0.0067, 0.0067, 0.002);
+				glScalef(0.0067 * 2, 0.0067 * 2, 0.003);
 				My_model.render();
 				glEnable(GL_COLOR_MATERIAL);
 				glPopMatrix();
@@ -326,16 +354,16 @@ void Scene::render() {
 			glEnable(GL_TEXTURE_2D);
 			glBindTexture(GL_TEXTURE_2D, Block);
 			glColor3f(1, 1, 1);
-			for (int Yside = 0; Yside < 4; Yside++)
+			for (int Yside = 0; Yside < 3; Yside++)
 			{
 				glPushMatrix();
 				glDisable(GL_COLOR_MATERIAL);
-				glTranslatef(-2 + Xside, -1.347 + Yside, 4.35);
+				glTranslatef(-2 + (Xside * 2), -0.847 + (Yside * 2), 4.35 * 2);
 				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, no_mat);
 				glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 				glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
 				glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
-				glScalef(0.0067, 0.0067, 0.002);
+				glScalef(0.0067 * 2, 0.0067 * 2, 0.003);
 				My_model.render();
 				glEnable(GL_COLOR_MATERIAL);
 				glPopMatrix();
@@ -349,16 +377,16 @@ void Scene::render() {
 			glEnable(GL_TEXTURE_2D);
 			glBindTexture(GL_TEXTURE_2D, Block);
 			glColor3f(1, 1, 1);
-			for (int Yside = 0; Yside < 4; Yside++)
+			for (int Yside = 0; Yside < 3; Yside++)
 			{
 				glPushMatrix();
 				glDisable(GL_COLOR_MATERIAL);
-				glTranslatef(-2.37, -1.347 + Yside, 0 + Zside);
+				glTranslatef(-2.87, -0.847 + (Yside * 2), 0 + (Zside * 2));
 				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, no_mat);
 				glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 				glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
 				glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
-				glScalef(0.002, 0.0067, 0.0067);
+				glScalef(0.003, 0.0067*2, 0.0067*2);
 				My_model.render();
 				glEnable(GL_COLOR_MATERIAL);
 				glPopMatrix();
@@ -372,16 +400,16 @@ void Scene::render() {
 			glEnable(GL_TEXTURE_2D);
 			glBindTexture(GL_TEXTURE_2D, Block);
 			glColor3f(1, 1, 1);
-			for (int Yside = 0; Yside < 4; Yside++)
+			for (int Yside = 0; Yside < 3; Yside++)
 			{
 				glPushMatrix();
 				glDisable(GL_COLOR_MATERIAL);
-				glTranslatef(4.37, -1.347 + Yside, 0 + Zside);
+				glTranslatef(10.87, -0.847 + (Yside * 2), 0 + (Zside * 2));
 				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, no_mat);
 				glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 				glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
 				glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
-				glScalef(0.002, 0.0067, 0.0067);
+				glScalef(0.003, 0.0067*2, 0.0067*2);
 				My_model.render();
 				glEnable(GL_COLOR_MATERIAL);
 				glPopMatrix();
