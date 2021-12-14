@@ -11,8 +11,10 @@ Scene::Scene(Input *in)
 	// Other OpenGL / render setting should be applied here.
 	if (!My_model.load("models/breakables_ground.obj", "models/breakables_ground_c.png"))
 	{
-		printf(" uh oh pee pee poo poo");
+		printf("Problem");
 	}
+	Torch.load("models/Torch.obj", "models/breakables_ground_c.png");
+
 
 	// Colour material overrides material values so disable it
 	
@@ -24,6 +26,7 @@ Scene::Scene(Input *in)
 	Skybox = SOIL_load_OGL_texture("gfx/skybox.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
 	Crate = SOIL_load_OGL_texture("gfx/crate.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
 	Block = SOIL_load_OGL_texture("models/breakables_ground_c.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
+	torch = SOIL_load_OGL_texture("models/Metal_A.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
 	glTexEnvf(GL_TEXTURE, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	// Initialise scene variables
 	/*Disk.Calculate(1, 50);*/
@@ -143,14 +146,16 @@ void Scene::render() {
 	
 
 	// Render geometry/scene here -------------------------------------
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, Grass);
+
+	//glEnable(GL_TEXTURE_2D);
+	//glBindTexture(GL_TEXTURE_2D, Grass);
 	/*glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);*/
 
 	glPushMatrix();
 	glEnable(GL_DEPTH_TEST);
 	glTranslatef(Camera.GetPossition().x, Camera.GetPossition().y, Camera.GetPossition().z);
 	glDisable(GL_DEPTH_TEST);
+	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, Skybox);
 	glColor3f(1, 1, 1);
 
@@ -252,10 +257,27 @@ void Scene::render() {
 	glPopMatrix();
 
 	glPushMatrix();
-	
+	glBindTexture(GL_TEXTURE_2D, Crate);
+	glTranslatef(-2.65, -0.5, 8);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.1, 0.1, 0.1);
+	Cylinder.Render(1, 1, 6);
+	glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
 
 	glPushMatrix();
+	glBindTexture(GL_TEXTURE_2D, torch);
+	glTranslatef(-2.65, -0.5, 7);
+	glRotatef(180, 0, 1, 0);
+	glScalef(0.5, 0.5, 0.5);
+	Torch.render();
+	glColor3f(1, 0.7, 0);
+	glTranslatef(-0.37, 0.6, 0);
+	Sphere.Render(0.05, 20, 20);
+	glPopMatrix();
+
+	glPushMatrix();
+	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, Grass);
 	glDisable(GL_COLOR_MATERIAL);
 	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE,mat_ambient_colour);

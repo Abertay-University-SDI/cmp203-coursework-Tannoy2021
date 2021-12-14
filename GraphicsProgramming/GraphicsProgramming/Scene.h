@@ -66,10 +66,12 @@ protected:
 	GLuint Grass;
 	GLuint Block;
 	GLuint Skybox;
+	GLuint torch;
 	Disk Disk;
 	Sphere Sphere;
 	Cylinder Cylinder;
 	Model My_model;
+	Model Torch;
 
 	int Seg = 1;
 	float Size = 0.1;
