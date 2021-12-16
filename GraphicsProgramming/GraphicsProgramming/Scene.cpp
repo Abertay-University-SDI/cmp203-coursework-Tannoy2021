@@ -9,25 +9,19 @@ Scene::Scene(Input *in)
 	initialiseOpenGL();
 
 	// Other OpenGL / render setting should be applied here.
-	if (!My_model.load("models/breakables_ground.obj", "models/breakables_ground_c.png"))
-	{
-		printf("Problem");
-	}
-	Torch.load("models/Torch.obj", "models/breakables_ground_c.png");
-
+	My_model.load("models/breakables_ground.obj", "models/breakables_ground_c.png");
+	Torch.load("models/Torch.obj", "models/Metal_A.png");
 
 	// Colour material overrides material values so disable it
 	
 	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_LIGHTING);
 
-
 	Grass = SOIL_load_OGL_texture("gfx/checked.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
 	Skybox = SOIL_load_OGL_texture("gfx/skybox.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
 	Crate = SOIL_load_OGL_texture("gfx/crate.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
 	Block = SOIL_load_OGL_texture("models/breakables_ground_c.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
-	torch = SOIL_load_OGL_texture("models/Metal_A.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
-	glTexEnvf(GL_TEXTURE, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	// Initialise scene variables
 	/*Disk.Calculate(1, 50);*/
 	
@@ -46,9 +40,10 @@ void Scene::handleInput(float dt,Input* in)
 	//glTranslatef(-2, -ButtonMove, 3);
 	// Y is 0 for the button for now 
 	if (in->isKeyDown('x') 
-		&& Camera.GetPossition().x > -3 && Camera.GetPossition().x < -1 
-		&& Camera.GetPossition().y > -1 && Camera.GetPossition().y < 1
-		&& Camera.GetPossition().z > 2 && Camera.GetPossition().z < 4)
+		&& Camera.GetPossition().x > 2 && Camera.GetPossition().x < 3 
+		&& Camera.GetPossition().y > -1 && Camera.GetPossition().y < 0.5
+		&& Camera.GetPossition().z > 3 && Camera.GetPossition().z < 5
+		&& FirstPerson == true)
 	{
 		SphereBool = true;
 	}
@@ -59,6 +54,50 @@ void Scene::handleInput(float dt,Input* in)
 	if (in->isKeyDown('p'))
 	{
 		EnableWireframe = false;
+	}
+
+	// Enables first person and disables Ghost mode
+	if (in->isKeyDown('f'))
+	{
+		FirstPerson = true;
+	}
+
+	// Disables first person and enables Ghost mode
+	if (in->isKeyDown('g'))
+	{
+		FirstPerson = false;
+	}
+
+	//Makeshift collision 
+	if (FirstPerson == true)
+	{
+		if (Camera.GetPossition().z < -0.36 && Camera.GetPossition().z < 1)
+		{
+			Camera.SetPossitionZ(-0.36);
+		}
+		if (Camera.GetPossition().z > 8 && Camera.GetPossition().z > 7)
+		{
+			Camera.SetPossitionZ(8);
+		}
+		/*if (Camera.GetPossition().y > 0.9 && Camera.GetPossition().y > 0.9)
+		{
+			Camera.SetPossitionY(-0.9);
+		}*/
+		//Testing restricted Y camera
+
+		/*if (Camera.GetPossition().y < -0.9 && Camera.GetPossition().y < 1)
+		{
+			Camera.SetPossitionY(-0.9);
+		}*/
+		Camera.SetPossitionY(-0.9);
+		if (Camera.GetPossition().x < -2.46 && Camera.GetPossition().x < -1)
+		{
+			Camera.SetPossitionX(-2.46);
+		}
+		if (Camera.GetPossition().x > 10 && Camera.GetPossition().x > 8)
+		{
+			Camera.SetPossitionX(10);
+		}
 	}
 }
 
@@ -134,15 +173,33 @@ void Scene::render() {
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, Light_Diffuse);
 	glLightfv(GL_LIGHT0, GL_POSITION, Light_Position);
 
-	/*glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1.0);
-	glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.25);
-	glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.15);*/
 
-	//glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, Spot_Direcion);
-	//glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 25.0f);
-	//glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 50.0f);	
+	//glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1.0);
+	glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 1);
+	//glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.15);
+
+
+	// The stop direction is the x y z direction the light will point to
+	// Y = 1 means it goes up
+	// Spot_Cutoof is the cone of the light 
+	// The bigger the value the more it goes to the left and the right
+	// 5 would basically just be a straight line going up if Y is = 1
+	// Exponent controlls how concentrated the light is at the centre
+	glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, Spot_Direcion);
+	glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 25.0f);
+	glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 0.0f);	
 
 	glEnable(GL_LIGHT0);
+
+	glLightfv(GL_LIGHT1, GL_AMBIENT, Light_Ambient1);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, Light_Diffuse1);
+	glLightfv(GL_LIGHT1, GL_POSITION, Light_Position1);
+
+	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, Spot_Direcion1);
+	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 25.0f);
+	glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 0.0f);
+
+	//glEnable(GL_LIGHT1);
 	
 
 	// Render geometry/scene here -------------------------------------
@@ -150,7 +207,7 @@ void Scene::render() {
 	//glEnable(GL_TEXTURE_2D);
 	//glBindTexture(GL_TEXTURE_2D, Grass);
 	/*glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);*/
-
+	glEnable(GL_TEXTURE_2D);
 	glPushMatrix();
 	glEnable(GL_DEPTH_TEST);
 	glTranslatef(Camera.GetPossition().x, Camera.GetPossition().y, Camera.GetPossition().z);
@@ -253,26 +310,62 @@ void Scene::render() {
 	glVertex3f(-1, -1, 1);
 
 	glEnd();
+	glBindTexture(GL_TEXTURE_2D, NULL);
 	glEnable(GL_DEPTH_TEST);
 	glPopMatrix();
+	// 
+	glDisable(GL_COLOR_MATERIAL);
 
 	glPushMatrix();
 	glBindTexture(GL_TEXTURE_2D, Crate);
-	glTranslatef(-2.65, -0.5, 8);
+	glTranslatef(-2.65, 1.5, 7);
 	glRotatef(90, 0, 1, 0);
 	glScalef(0.1, 0.1, 0.1);
+	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+	glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
+	glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
 	Cylinder.Render(1, 1, 6);
-	glDisable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, NULL);
 	glPopMatrix();
 
 	glPushMatrix();
-	glBindTexture(GL_TEXTURE_2D, torch);
+	glDisable(GL_COLOR_MATERIAL);
+	glBindTexture(GL_TEXTURE_2D, Block);
+	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+	glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
+	glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
+	glScalef(0.5, 6, 0.5);
+	glTranslatef(0.5, 0.7, 3);
+	glRotatef(90, 1, 0, 0);
+	Cylinder.Render(1, 1, 6);
+	glTranslatef(15, 0, 0);
+	Cylinder.Render(1, 1, 6);
+	glTranslatef(0, 10, 0);
+	Cylinder.Render(1, 1, 6);
+	glTranslatef(-15, 0, 0);
+	Cylinder.Render(1, 1, 6);
+	glPopMatrix();
+
+	glPushMatrix();
 	glTranslatef(-2.65, -0.5, 7);
 	glRotatef(180, 0, 1, 0);
 	glScalef(0.5, 0.5, 0.5);
 	Torch.render();
 	glColor3f(1, 0.7, 0);
-	glTranslatef(-0.37, 0.6, 0);
+	glTranslatef(TorchX,TorchY,TorchZ);
+	Sphere.Render(0.05, 20, 20);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(-2.65, -0.5, 3);
+	glRotatef(180, 0, 1, 0);
+	glScalef(0.5, 0.5, 0.5);
+	glColor3f(0, 0, 0);
+	Torch.render();
+	glColor3f(1, 0.7, 0);
+	glTranslatef(TorchX, TorchY, 0);
 	Sphere.Render(0.05, 20, 20);
 	glPopMatrix();
 
@@ -315,29 +408,39 @@ void Scene::render() {
 
 	glPushMatrix();
 	glBindTexture(GL_TEXTURE_2D, Crate);
-	glTranslatef(-2, -ButtonMove, 3);
-	glRotatef(90, 1, 0, 0);
+	glTranslatef(3 + ButtonMove, -1, 4);
+	glRotatef(90, 0, 1, 0);
 	glScalef(0.1, 0.1, 0.1);
 	Cylinder.Render(1,1,6);
-	glDisable(GL_TEXTURE_2D);
+	glPopMatrix();
+
+	glPushMatrix();
+	glDisable(GL_COLOR_MATERIAL);
+	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+	glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
+	glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
+	glTranslatef(3.57, -1.3, 4);
+	glScalef(0.0067, 0.0067, 0.0067);
+	My_model.render();
 	glPopMatrix();
 
 	// For Color materials have disable right after the push 
 	// and Enable right before the pop
 	// otherwise not only the nester for loop will have the color materials but everything before it aswell !
 
+
+
 	//Floor
 		for (int Xside = 0; Xside < 7; Xside++)
 		{
-			glEnable(GL_TEXTURE_2D);
-			glBindTexture(GL_TEXTURE_2D, Block);
 			glColor3f(1, 1, 1);
 			for (int Zside = 0; Zside < 5; Zside++)
 			{
 				glPushMatrix();
 				glDisable(GL_COLOR_MATERIAL);
 				glTranslatef(-2 + (Xside * 2)  , -2,0 + (Zside * 2));
-				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, no_mat);
+				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
 				glMaterialfv(GL_FRONT, GL_SPECULAR, no_mat);
 				glMateriali(GL_FRONT, GL_SHININESS, no_shininess);
 				glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
@@ -348,18 +451,35 @@ void Scene::render() {
 			}
 		}
 
+		//Roof
+		for (int Xside = 0; Xside < 7; Xside++)
+		{
+			glColor3f(1, 1, 1);
+			for (int Zside = 0; Zside < 5; Zside++)
+			{
+				glPushMatrix();
+				glDisable(GL_COLOR_MATERIAL);
+				glTranslatef(-2 + (Xside * 2), 4.3, 0 + (Zside * 2));
+				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
+				glMaterialfv(GL_FRONT, GL_SPECULAR, no_mat);
+				glMateriali(GL_FRONT, GL_SHININESS, no_shininess);
+				glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
+				glScalef(0.0067 * 2, 0.003, 0.0067 * 2);
+				My_model.render();
+				glEnable(GL_COLOR_MATERIAL);
+				glPopMatrix();
+			}
+		}
 		//back wall
 		for (int Xside = 0; Xside < 7; Xside++)
 		{
-			glEnable(GL_TEXTURE_2D);
-			glBindTexture(GL_TEXTURE_2D, Block);
 			glColor3f(1, 1, 1);
 			for (int Zside = 0; Zside < 3; Zside++)
 			{
 				glPushMatrix();
 				glDisable(GL_COLOR_MATERIAL);
 				glTranslatef(-2 + (Xside * 2), -0.847 + (Zside * 2), -0.75);
-				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, no_mat);
+				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
 				glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 				glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
 				glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
@@ -373,15 +493,13 @@ void Scene::render() {
 		//Front wall
 		for (int Xside = 0; Xside < 7; Xside++)
 		{
-			glEnable(GL_TEXTURE_2D);
-			glBindTexture(GL_TEXTURE_2D, Block);
 			glColor3f(1, 1, 1);
 			for (int Yside = 0; Yside < 3; Yside++)
 			{
 				glPushMatrix();
 				glDisable(GL_COLOR_MATERIAL);
 				glTranslatef(-2 + (Xside * 2), -0.847 + (Yside * 2), 4.35 * 2);
-				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, no_mat);
+				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
 				glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 				glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
 				glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
@@ -396,15 +514,13 @@ void Scene::render() {
 		// Left wall
 		for (int Zside = 0; Zside < 5; Zside++)
 		{
-			glEnable(GL_TEXTURE_2D);
-			glBindTexture(GL_TEXTURE_2D, Block);
 			glColor3f(1, 1, 1);
 			for (int Yside = 0; Yside < 3; Yside++)
 			{
 				glPushMatrix();
 				glDisable(GL_COLOR_MATERIAL);
 				glTranslatef(-2.87, -0.847 + (Yside * 2), 0 + (Zside * 2));
-				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, no_mat);
+				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
 				glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 				glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
 				glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
@@ -419,15 +535,13 @@ void Scene::render() {
 		// Right wall
 		for (int Zside = 0; Zside < 5; Zside++)
 		{
-			glEnable(GL_TEXTURE_2D);
-			glBindTexture(GL_TEXTURE_2D, Block);
 			glColor3f(1, 1, 1);
 			for (int Yside = 0; Yside < 3; Yside++)
 			{
 				glPushMatrix();
 				glDisable(GL_COLOR_MATERIAL);
 				glTranslatef(10.87, -0.847 + (Yside * 2), 0 + (Zside * 2));
-				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, no_mat);
+				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
 				glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 				glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
 				glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);

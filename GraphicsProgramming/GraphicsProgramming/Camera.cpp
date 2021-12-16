@@ -104,6 +104,24 @@ Vector3 Camera::GetPossition()
 	return Possition;
 }
 
+Vector3 Camera::SetPossitionZ(float z)
+{
+	Possition = Vector3(GetPossition().x,GetPossition().y,z);
+	return Possition;
+}
+
+Vector3 Camera::SetPossitionY(float y)
+{
+	Possition = Vector3(GetPossition().x, y, GetPossition().z);
+	return Possition;
+}
+
+Vector3 Camera::SetPossitionX(float x)
+{
+	Possition = Vector3(x,GetPossition().y, GetPossition().z);
+	return Possition;
+}
+
 Vector3 Camera::GetUp()
 {
 	return Up;

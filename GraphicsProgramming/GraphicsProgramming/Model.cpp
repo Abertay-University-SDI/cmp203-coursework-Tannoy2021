@@ -28,6 +28,7 @@ void Model::render()
 {
 	// TODO: Need to add code here to render the loaded model
 	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, texture);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -83,12 +84,10 @@ bool Model::loadModel(char* filename)
 				Vector3 uv;
 				fscanf(file, "%f %f\n", &uv.x, &uv.y);
 				texCs.push_back(uv);
-				if (uMax < uv.x)
-				{
+				if (uMax<uv.x) {
 					uMax = uv.x;
 				}
-				if (vMax < uv.y)
-				{
+				if (vMax < uv.y) {
 					vMax = uv.y;
 				}
 			}

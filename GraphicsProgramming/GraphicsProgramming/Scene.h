@@ -64,9 +64,9 @@ protected:
 	Camera Camera;
 	GLuint Crate;
 	GLuint Grass;
-	GLuint Block;
 	GLuint Skybox;
-	GLuint torch;
+	GLuint Block;
+	
 	Disk Disk;
 	Sphere Sphere;
 	Cylinder Cylinder;
@@ -85,14 +85,34 @@ protected:
 	float rotation = 0;
 
 
+	float TorchX = -0.37f;
+	float TorchY = 0.6f;
+	float TorchZ = 0;
+
+	bool FirstPerson = false;
 
 
 	//Lights 
 
 	GLfloat Light_Ambient[4] = { 0.4f, 0.4f, 0.4f, 1.0f };
-	GLfloat Light_Diffuse[4] = { 0.4f, 0.4f, 0.4f, 1.0f };
-	GLfloat Light_Position[4] = { 1.0f, 2.0f, 1.0f, 1.0f };
-	GLfloat Spot_Direcion[3] = { 0.0f, -1.0f,0.0f };
+	GLfloat Light_Diffuse[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+	GLfloat Light_Ambient1[4] = { 0.4f, 0.4f, 0.4f, 1.0f };
+	GLfloat Light_Diffuse1[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+	// The possitions are inverted
+	// a 1 will shine in the negative direction
+	// while -1 will shine in the possitive direction
+
+	// The last value is called W 
+	// if its 0 its a directional light 
+	// if its 1 the light starts from the possition 
+	GLfloat Light_Position[4] = { -2.07f, -1.5f,7.0f, 1.0f };
+	GLfloat Light_Position1[4] = { -2.27f, -1.6f,3.0f, 1.0f };
+
+
+	GLfloat Spot_Direcion[3] = { 0.0f, 1.0f,0.0f };
+	GLfloat Spot_Direcion1[3] = { 0.0f, 0.0f,0.0f };
 
 
 	//Materials 

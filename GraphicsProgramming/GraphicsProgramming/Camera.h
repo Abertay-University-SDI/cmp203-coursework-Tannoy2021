@@ -10,6 +10,9 @@ public:
 	void handleInput(float dt, Input* in, float Window_Width, float Window_Height);
 	~Camera();
 	Vector3 GetPossition();
+	Vector3 SetPossitionZ(float z);
+	Vector3 SetPossitionY(float y);
+	Vector3 SetPossitionX(float x);
 	Vector3 GetLook_At();
 	Vector3 GetUp();
 	float speed = 150;
