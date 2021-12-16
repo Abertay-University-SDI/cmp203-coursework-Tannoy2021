@@ -74,7 +74,7 @@ protected:
 	Model Torch;
 
 	int Seg = 1;
-	float Size = 0.1;
+	float Size = 0.15;
 	float ButtonMove = 0.005f;
 	float TimePassed = 3.f;
 	float ButtonTime = 0.3f;
@@ -94,11 +94,11 @@ protected:
 
 	//Lights 
 
-	GLfloat Light_Ambient[4] = { 0.4f, 0.4f, 0.4f, 1.0f };
-	GLfloat Light_Diffuse[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	GLfloat Light_Ambient[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	GLfloat Light_Diffuse[4] = { 1.f, 1.f, 1.f, 1.0f };
 
 	GLfloat Light_Ambient1[4] = { 0.4f, 0.4f, 0.4f, 1.0f };
-	GLfloat Light_Diffuse1[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	GLfloat Light_Diffuse1[4] = { 0.4f, 0.4f, 0.4f, 1.0f };
 
 	// The possitions are inverted
 	// a 1 will shine in the negative direction
@@ -107,12 +107,12 @@ protected:
 	// The last value is called W 
 	// if its 0 its a directional light 
 	// if its 1 the light starts from the possition 
-	GLfloat Light_Position[4] = { -2.07f, -1.5f,7.0f, 1.0f };
-	GLfloat Light_Position1[4] = { -2.27f, -1.6f,3.0f, 1.0f };
+	GLfloat Light_Position[4] = { -1.87f, -2.0f,7.0f, 1.0f };
+	GLfloat Light_Position1[4] = { 0.0f, 5.f,0.0f, 0.0f };
 
 
 	GLfloat Spot_Direcion[3] = { 0.0f, 1.0f,0.0f };
-	GLfloat Spot_Direcion1[3] = { 0.0f, 0.0f,0.0f };
+	/*GLfloat Spot_Direcion1[3] = { 0.0f, 1.0f,0.0f };*/
 
 
 	//Materials 
@@ -128,6 +128,14 @@ protected:
 
 
 
+	GLfloat Light_Ambient2[4] = { 0.2f, 0.2f, 0.2f, 1.0f };
+	GLfloat Light_Diffuse2[4] = { 1.f, 1.f, 1.f, 1.0f };
+
+	GLfloat Light_Ambient3[4] = { 0.2f, 0.2f, 0.2f, 1.0f };
+	GLfloat Light_Diffuse3[4] = { 1.f, 1.f, 1.f, 1.0f };
+
+	GLfloat Light_Position2[4] = { 25.0f, -5.f,25.0f, 1.0f };
+	GLfloat Light_Position3[4] = { 25.0f, -5.f,10.0f, 1.0f };
 
 };
 

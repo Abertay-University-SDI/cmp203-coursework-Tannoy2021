@@ -14,7 +14,7 @@ Scene::Scene(Input *in)
 
 	// Colour material overrides material values so disable it
 	
-	glEnable(GL_COLOR_MATERIAL);
+	glDisable(GL_COLOR_MATERIAL);
 	glEnable(GL_LIGHTING);
 
 	Grass = SOIL_load_OGL_texture("gfx/checked.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
@@ -98,6 +98,21 @@ void Scene::handleInput(float dt,Input* in)
 		{
 			Camera.SetPossitionX(10);
 		}
+		// 4 pillars
+		/*glTranslatef(0.5, 0.7, 3);
+		glRotatef(90, 1, 0, 0);
+		glTranslatef(15, 0, 0);
+		glTranslatef(0, 10, 0);
+		glTranslatef(-15, 0, 0);*/
+		if (Camera.GetPossition().x > -0.5 && Camera.GetPossition().x > -0.6 && Camera.GetPossition().x < 0.5 && Camera.GetPossition().z < 7 && Camera.GetPossition().z > 6.0)
+		{
+			Camera.SetPossitionX(-0.5);
+		}
+		if (Camera.GetPossition().x < 1.1 && Camera.GetPossition().x < 1.2 && Camera.GetPossition().x > 1 && Camera.GetPossition().z < 7 && Camera.GetPossition().z > 6.0)
+		{
+			Camera.SetPossitionX(1.1);
+		}
+
 	}
 }
 
@@ -185,22 +200,35 @@ void Scene::render() {
 	// The bigger the value the more it goes to the left and the right
 	// 5 would basically just be a straight line going up if Y is = 1
 	// Exponent controlls how concentrated the light is at the centre
-	glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, Spot_Direcion);
+    glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, Spot_Direcion);
 	glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 25.0f);
-	glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 0.0f);	
+	glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 0.0f);
 
-	glEnable(GL_LIGHT0);
 
 	glLightfv(GL_LIGHT1, GL_AMBIENT, Light_Ambient1);
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, Light_Diffuse1);
 	glLightfv(GL_LIGHT1, GL_POSITION, Light_Position1);
 
-	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, Spot_Direcion1);
-	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 25.0f);
-	glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 0.0f);
+	glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, 0.25);
 
-	//glEnable(GL_LIGHT1);
-	
+	//glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, Spot_Direcion1);
+	//glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 25.0f);
+	//glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 0.0f);
+
+	glEnable(GL_LIGHT1);
+	glEnable(GL_LIGHT0);
+
+	glLightfv(GL_LIGHT2, GL_AMBIENT, Light_Ambient2);
+	glLightfv(GL_LIGHT2, GL_DIFFUSE, Light_Diffuse2);
+	glLightfv(GL_LIGHT2, GL_POSITION, Light_Position2);
+
+	glLightfv(GL_LIGHT3, GL_AMBIENT, Light_Ambient3);
+	glLightfv(GL_LIGHT3, GL_DIFFUSE, Light_Diffuse3);
+	glLightfv(GL_LIGHT3, GL_POSITION, Light_Position3);
+
+	//glEnable(GL_LIGHT2);
+	//glEnable(GL_LIGHT3);
+
 
 	// Render geometry/scene here -------------------------------------
 
@@ -209,6 +237,7 @@ void Scene::render() {
 	/*glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);*/
 	glEnable(GL_TEXTURE_2D);
 	glPushMatrix();
+	glDisable(GL_LIGHTING);
 	glEnable(GL_DEPTH_TEST);
 	glTranslatef(Camera.GetPossition().x, Camera.GetPossition().y, Camera.GetPossition().z);
 	glDisable(GL_DEPTH_TEST);
@@ -312,11 +341,134 @@ void Scene::render() {
 	glEnd();
 	glBindTexture(GL_TEXTURE_2D, NULL);
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_LIGHTING);
 	glPopMatrix();
-	// 
+	
 	glDisable(GL_COLOR_MATERIAL);
 
-	glPushMatrix();
+	//Floor
+	for (int Xside = 0; Xside < 7; Xside++)
+	{
+		glColor3f(1, 1, 1);
+		for (int Zside = 0; Zside < 5; Zside++)
+		{
+			glPushMatrix();
+			glDisable(GL_COLOR_MATERIAL);
+			glTranslatef(-2 + (Xside * 2), -2, 0 + (Zside * 2));
+			glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
+			glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+			glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
+			glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
+			glRotatef(180, 0, 1, 0);
+			glScalef(0.0067 * 2, 0.003, 0.0067 * 2);
+			My_model.render();
+			glEnable(GL_COLOR_MATERIAL);
+			glPopMatrix();
+		}
+	}
+	//Roof
+	for (int Xside = 0; Xside < 7; Xside++)
+	{
+		glColor3f(1, 1, 1);
+		for (int Zside = 0; Zside < 5; Zside++)
+		{
+			glPushMatrix();
+			glDisable(GL_COLOR_MATERIAL);
+			glTranslatef(-2 + (Xside * 2), 4.3, 0 + (Zside * 2));
+			glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
+			glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+			glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
+			glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
+			glRotatef(180, 0, 1, 0);
+			glScalef(0.0067 * 2, 0.003, 0.0067 * 2);
+			My_model.render();
+			glEnable(GL_COLOR_MATERIAL);
+			glPopMatrix();
+		}
+	}
+	//Back wall
+	for (int Xside = 0; Xside < 7; Xside++)
+	{
+		glColor3f(1, 1, 1);
+		for (int Zside = 0; Zside < 3; Zside++)
+		{
+			glPushMatrix();
+			glDisable(GL_COLOR_MATERIAL);
+			glTranslatef(-2 + (Xside * 2), -0.847 + (Zside * 2), -0.75);
+			glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
+			glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+			glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
+			glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
+			glRotatef(360, 1, 0, 1);
+			glScalef(0.0067 * 2, 0.0067 * 2, 0.003);
+			My_model.render();
+			glEnable(GL_COLOR_MATERIAL);
+			glPopMatrix();
+		}
+	}
+	//Front wall
+	for (int Xside = 0; Xside < 7; Xside++)
+	{
+		glColor3f(1, 1, 1);
+		for (int Yside = 0; Yside < 3; Yside++)
+		{
+			glPushMatrix();
+			glDisable(GL_COLOR_MATERIAL);
+			glTranslatef(-2 + (Xside * 2), -0.847 + (Yside * 2), 4.35 * 2);
+			glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
+			glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+			glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
+			glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
+			glRotatef(360, 1, 0, 1);
+			glScalef(0.0067 * 2, 0.0067 * 2, 0.003);
+			My_model.render();
+			glEnable(GL_COLOR_MATERIAL);
+			glPopMatrix();
+		}
+	}
+	// Left wall
+	for (int Zside = 0; Zside < 5; Zside++)
+	{
+		glColor3f(1, 1, 1);
+		for (int Yside = 0; Yside < 3; Yside++)
+		{
+			glPushMatrix();
+			glDisable(GL_COLOR_MATERIAL);
+			glTranslatef(-2.87, -0.847 + (Yside * 2), 0 + (Zside * 2));
+			glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
+			glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+			glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
+			glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
+			glRotatef(360, 1, 0, 1);
+			glScalef(0.003, 0.0067 * 2, 0.0067 * 2);
+			My_model.render();
+			glEnable(GL_COLOR_MATERIAL);
+			glPopMatrix();
+		}
+	}
+	// Right wall
+	for (int Zside = 0; Zside < 5; Zside++)
+	{
+		glColor3f(1, 1, 1);
+		for (int Yside = 0; Yside < 3; Yside++)
+		{
+			glPushMatrix();
+			glDisable(GL_COLOR_MATERIAL);
+			glTranslatef(10.87, -0.847 + (Yside * 2), 0 + (Zside * 2));
+			glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
+			glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+			glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
+			glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
+			glRotatef(360, 1, 0, 1);
+			glScalef(0.003, 0.0067 * 2, 0.0067 * 2);
+			My_model.render();
+			glEnable(GL_COLOR_MATERIAL);
+			glPopMatrix();
+		}
+	}
+
+	/*glPushMatrix();
+	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, Crate);
 	glTranslatef(-2.65, 1.5, 7);
 	glRotatef(90, 0, 1, 0);
@@ -327,9 +479,10 @@ void Scene::render() {
 	glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
 	Cylinder.Render(1, 1, 6);
 	glBindTexture(GL_TEXTURE_2D, NULL);
-	glPopMatrix();
+	glPopMatrix();*/
 
 	glPushMatrix();
+	glEnable(GL_TEXTURE_2D);
 	glDisable(GL_COLOR_MATERIAL);
 	glBindTexture(GL_TEXTURE_2D, Block);
 	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
@@ -369,44 +522,47 @@ void Scene::render() {
 	Sphere.Render(0.05, 20, 20);
 	glPopMatrix();
 
+
 	glPushMatrix();
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, Grass);
 	glDisable(GL_COLOR_MATERIAL);
-	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE,mat_ambient_colour);
+	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 	glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
 	glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
-	glTranslatef(0, 0, 3);
+	glTranslatef(3.57, -1.0, 1.5);
 	Sphere.Render(Size, Seg, Seg);
-	glEnable(GL_COLOR_MATERIAL);
+	
+	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+	glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
+	glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
+	glTranslatef(4, 0, 2.5);
+	Sphere.Render(Size, Seg, Seg);
+
+	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+	glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
+	glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
+	glTranslatef(-4, 0, 2.5);
+	Sphere.Render(Size, Seg, Seg);
 	glPopMatrix();
 
-	glPushMatrix();
+	/*glPushMatrix();
 	glBindTexture(GL_TEXTURE_2D, Grass);
 	glDisable(GL_COLOR_MATERIAL);
 	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 	glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
 	glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
-	glTranslatef(0, 0, 5);
+	glTranslatef(2, 0, 2);
 	Sphere.Render(Size, Seg, Seg);
 	glEnable(GL_COLOR_MATERIAL);
-	glPopMatrix();
+	glPopMatrix();*/
 
 	glPushMatrix();
-	glBindTexture(GL_TEXTURE_2D, Grass);
-	glDisable(GL_COLOR_MATERIAL);
-	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-	glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
-	glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
-	glTranslatef(0, 6, 5);
-	Sphere.Render(Size, Seg, Seg);
-	glEnable(GL_COLOR_MATERIAL);
-	glPopMatrix();
-
-	glPushMatrix();
+	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, Crate);
 	glTranslatef(3 + ButtonMove, -1, 4);
 	glRotatef(90, 0, 1, 0);
@@ -431,126 +587,7 @@ void Scene::render() {
 
 
 
-	//Floor
-		for (int Xside = 0; Xside < 7; Xside++)
-		{
-			glColor3f(1, 1, 1);
-			for (int Zside = 0; Zside < 5; Zside++)
-			{
-				glPushMatrix();
-				glDisable(GL_COLOR_MATERIAL);
-				glTranslatef(-2 + (Xside * 2)  , -2,0 + (Zside * 2));
-				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
-				glMaterialfv(GL_FRONT, GL_SPECULAR, no_mat);
-				glMateriali(GL_FRONT, GL_SHININESS, no_shininess);
-				glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
-				glScalef(0.0067*2, 0.003, 0.0067*2);
-				My_model.render();
-				glEnable(GL_COLOR_MATERIAL);
-				glPopMatrix();
-			}
-		}
-
-		//Roof
-		for (int Xside = 0; Xside < 7; Xside++)
-		{
-			glColor3f(1, 1, 1);
-			for (int Zside = 0; Zside < 5; Zside++)
-			{
-				glPushMatrix();
-				glDisable(GL_COLOR_MATERIAL);
-				glTranslatef(-2 + (Xside * 2), 4.3, 0 + (Zside * 2));
-				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
-				glMaterialfv(GL_FRONT, GL_SPECULAR, no_mat);
-				glMateriali(GL_FRONT, GL_SHININESS, no_shininess);
-				glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
-				glScalef(0.0067 * 2, 0.003, 0.0067 * 2);
-				My_model.render();
-				glEnable(GL_COLOR_MATERIAL);
-				glPopMatrix();
-			}
-		}
-		//back wall
-		for (int Xside = 0; Xside < 7; Xside++)
-		{
-			glColor3f(1, 1, 1);
-			for (int Zside = 0; Zside < 3; Zside++)
-			{
-				glPushMatrix();
-				glDisable(GL_COLOR_MATERIAL);
-				glTranslatef(-2 + (Xside * 2), -0.847 + (Zside * 2), -0.75);
-				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
-				glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-				glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
-				glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
-				glScalef(0.0067 * 2, 0.0067 * 2, 0.003);
-				My_model.render();
-				glEnable(GL_COLOR_MATERIAL);
-				glPopMatrix();
-			}
-		}
-
-		//Front wall
-		for (int Xside = 0; Xside < 7; Xside++)
-		{
-			glColor3f(1, 1, 1);
-			for (int Yside = 0; Yside < 3; Yside++)
-			{
-				glPushMatrix();
-				glDisable(GL_COLOR_MATERIAL);
-				glTranslatef(-2 + (Xside * 2), -0.847 + (Yside * 2), 4.35 * 2);
-				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
-				glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-				glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
-				glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
-				glScalef(0.0067 * 2, 0.0067 * 2, 0.003);
-				My_model.render();
-				glEnable(GL_COLOR_MATERIAL);
-				glPopMatrix();
-			}
-		}
-
-
-		// Left wall
-		for (int Zside = 0; Zside < 5; Zside++)
-		{
-			glColor3f(1, 1, 1);
-			for (int Yside = 0; Yside < 3; Yside++)
-			{
-				glPushMatrix();
-				glDisable(GL_COLOR_MATERIAL);
-				glTranslatef(-2.87, -0.847 + (Yside * 2), 0 + (Zside * 2));
-				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
-				glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-				glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
-				glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
-				glScalef(0.003, 0.0067*2, 0.0067*2);
-				My_model.render();
-				glEnable(GL_COLOR_MATERIAL);
-				glPopMatrix();
-			}
-		}
-
-
-		// Right wall
-		for (int Zside = 0; Zside < 5; Zside++)
-		{
-			glColor3f(1, 1, 1);
-			for (int Yside = 0; Yside < 3; Yside++)
-			{
-				glPushMatrix();
-				glDisable(GL_COLOR_MATERIAL);
-				glTranslatef(10.87, -0.847 + (Yside * 2), 0 + (Zside * 2));
-				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
-				glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-				glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
-				glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
-				glScalef(0.003, 0.0067*2, 0.0067*2);
-				My_model.render();
-				glEnable(GL_COLOR_MATERIAL);
-				glPopMatrix();
-			}
-		}
+	
 
 
 	// End render geometry --------------------------------------
