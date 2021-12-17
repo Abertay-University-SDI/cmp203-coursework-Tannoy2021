@@ -202,21 +202,21 @@ void Scene::render() {
 	// Exponent controlls how concentrated the light is at the centre
     glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, Spot_Direcion);
 	glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 25.0f);
-	glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 0.0f);
+	glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 1.0f);
 
 
 	glLightfv(GL_LIGHT1, GL_AMBIENT, Light_Ambient1);
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, Light_Diffuse1);
 	glLightfv(GL_LIGHT1, GL_POSITION, Light_Position1);
 
-	glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, 0.25);
+	glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, 1);
 
-	//glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, Spot_Direcion1);
-	//glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 25.0f);
-	//glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 0.0f);
+	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, Spot_Direcion1);
+	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 45.0f);
+	glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 0.0f);
 
-	glEnable(GL_LIGHT1);
 	glEnable(GL_LIGHT0);
+	//glEnable(GL_LIGHT1);
 
 	glLightfv(GL_LIGHT2, GL_AMBIENT, Light_Ambient2);
 	glLightfv(GL_LIGHT2, GL_DIFFUSE, Light_Diffuse2);
@@ -354,13 +354,13 @@ void Scene::render() {
 		{
 			glPushMatrix();
 			glDisable(GL_COLOR_MATERIAL);
-			glTranslatef(-2 + (Xside * 2), -2, 0 + (Zside * 2));
+			glTranslatef(-2 + (Xside * 2), -2.74, 0 + (Zside * 2));
 			glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
 			glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 			glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
 			glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
-			glRotatef(180, 0, 1, 0);
-			glScalef(0.0067 * 2, 0.003, 0.0067 * 2);
+			glRotatef(90, 1, 0, 0);
+			glScalef(0.0067 * 2, 0.0067 * 2, 0.0067 * 2);
 			My_model.render();
 			glEnable(GL_COLOR_MATERIAL);
 			glPopMatrix();
@@ -374,13 +374,13 @@ void Scene::render() {
 		{
 			glPushMatrix();
 			glDisable(GL_COLOR_MATERIAL);
-			glTranslatef(-2 + (Xside * 2), 4.3, 0 + (Zside * 2));
+			glTranslatef(-2 + (Xside * 2), 5.2, 0 + (Zside * 2));
 			glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
 			glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 			glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
 			glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
-			glRotatef(180, 0, 1, 0);
-			glScalef(0.0067 * 2, 0.003, 0.0067 * 2);
+			glRotatef(90, 1, 0, 0);
+			glScalef(0.0067 * 2, 0.0067 * 2, 0.0067 * 2);
 			My_model.render();
 			glEnable(GL_COLOR_MATERIAL);
 			glPopMatrix();
@@ -394,13 +394,14 @@ void Scene::render() {
 		{
 			glPushMatrix();
 			glDisable(GL_COLOR_MATERIAL);
-			glTranslatef(-2 + (Xside * 2), -0.847 + (Zside * 2), -0.75);
+			glTranslatef(-2 + (Xside * 2), -0.847 + (Zside * 2), -1.55);
 			glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
 			glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 			glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
 			glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
-			glRotatef(360, 1, 0, 1);
-			glScalef(0.0067 * 2, 0.0067 * 2, 0.003);
+			// fixing the normals
+			glRotatef(90,1,0,0);
+			glScalef(0.0067 * 2, 0.0067 * 2, 0.0067 * 2);
 			My_model.render();
 			glEnable(GL_COLOR_MATERIAL);
 			glPopMatrix();
@@ -414,13 +415,13 @@ void Scene::render() {
 		{
 			glPushMatrix();
 			glDisable(GL_COLOR_MATERIAL);
-			glTranslatef(-2 + (Xside * 2), -0.847 + (Yside * 2), 4.35 * 2);
+			glTranslatef(-2 + (Xside * 2), -0.847 + (Yside * 2), 4.72 * 2);
 			glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
 			glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 			glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
 			glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
-			glRotatef(360, 1, 0, 1);
-			glScalef(0.0067 * 2, 0.0067 * 2, 0.003);
+			glRotatef(90, 1, 0, 0);
+			glScalef(0.0067 * 2, 0.0067 * 2, 0.0067 * 2);
 			My_model.render();
 			glEnable(GL_COLOR_MATERIAL);
 			glPopMatrix();
@@ -439,7 +440,7 @@ void Scene::render() {
 			glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 			glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
 			glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
-			glRotatef(360, 1, 0, 1);
+			glRotatef(90, 1, 0, 0);
 			glScalef(0.003, 0.0067 * 2, 0.0067 * 2);
 			My_model.render();
 			glEnable(GL_COLOR_MATERIAL);
@@ -459,7 +460,7 @@ void Scene::render() {
 			glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 			glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
 			glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
-			glRotatef(360, 1, 0, 1);
+			glRotatef(90, 1, 0, 0);
 			glScalef(0.003, 0.0067 * 2, 0.0067 * 2);
 			My_model.render();
 			glEnable(GL_COLOR_MATERIAL);
@@ -578,6 +579,7 @@ void Scene::render() {
 	glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
 	glTranslatef(3.57, -1.3, 4);
 	glScalef(0.0067, 0.0067, 0.0067);
+	glRotatef(90, 1, 0, 0);
 	My_model.render();
 	glPopMatrix();
 

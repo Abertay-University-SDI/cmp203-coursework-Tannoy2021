@@ -94,10 +94,13 @@ protected:
 
 	//Lights 
 
-	GLfloat Light_Ambient[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
-	GLfloat Light_Diffuse[4] = { 1.f, 1.f, 1.f, 1.0f };
+	/*GLfloat Light_Ambient[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	GLfloat Light_Diffuse[4] = { 1.f, 1.f, 1.f, 1.0f };*/
 
-	GLfloat Light_Ambient1[4] = { 0.4f, 0.4f, 0.4f, 1.0f };
+	GLfloat Light_Ambient[4] = { 0.4f, 0.4f, 0.4f, 1.0f };
+	GLfloat Light_Diffuse[4] = { 0.4f, 0.4f, 0.4f, 1.0f };
+
+	GLfloat Light_Ambient1[4] = { 0.2f, 0.2f, 0.0f, 1.0f };
 	GLfloat Light_Diffuse1[4] = { 0.4f, 0.4f, 0.4f, 1.0f };
 
 	// The possitions are inverted
@@ -107,12 +110,12 @@ protected:
 	// The last value is called W 
 	// if its 0 its a directional light 
 	// if its 1 the light starts from the possition 
-	GLfloat Light_Position[4] = { -1.87f, -2.0f,7.0f, 1.0f };
-	GLfloat Light_Position1[4] = { 0.0f, 5.f,0.0f, 0.0f };
+	GLfloat Light_Position[4] = { -2.27f, -1.7f,7.0f, 1.0f };
+	GLfloat Light_Position1[4] = { 3.57f, -12.f, 0.f, 1.0f };
 
 
-	GLfloat Spot_Direcion[3] = { 0.0f, 1.0f,0.0f };
-	/*GLfloat Spot_Direcion1[3] = { 0.0f, 1.0f,0.0f };*/
+	GLfloat Spot_Direcion[3] = { -0.1f, 1.0f,0.0f };
+	GLfloat Spot_Direcion1[3] = { 0.0f, 1.0f,0.0f };
 
 
 	//Materials 
