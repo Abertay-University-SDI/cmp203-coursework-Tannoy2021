@@ -104,13 +104,74 @@ void Scene::handleInput(float dt,Input* in)
 		glTranslatef(15, 0, 0);
 		glTranslatef(0, 10, 0);
 		glTranslatef(-15, 0, 0);*/
-		if (Camera.GetPossition().x > -0.5 && Camera.GetPossition().x > -0.6 && Camera.GetPossition().x < 0.5 && Camera.GetPossition().z < 7 && Camera.GetPossition().z > 6.0)
+		if (Camera.GetPossition().x > -0.5 && Camera.GetPossition().x > -0.6 && Camera.GetPossition().x < 0.5 && Camera.GetPossition().z < 6.7 && Camera.GetPossition().z > 6.0)
 		{
 			Camera.SetPossitionX(-0.5);
 		}
-		if (Camera.GetPossition().x < 1.1 && Camera.GetPossition().x < 1.2 && Camera.GetPossition().x > 1 && Camera.GetPossition().z < 7 && Camera.GetPossition().z > 6.0)
+		if (Camera.GetPossition().x < 1.1 && Camera.GetPossition().x < 1.2 && Camera.GetPossition().x > 1 && Camera.GetPossition().z < 6.7 && Camera.GetPossition().z > 6.0)
 		{
 			Camera.SetPossitionX(1.1);
+		}
+		if (Camera.GetPossition().x > -0.5 && Camera.GetPossition().x > -0.6 && Camera.GetPossition().x < 0.5 && Camera.GetPossition().z > 5.8 && Camera.GetPossition().z > 5.7 && Camera.GetPossition().z < 6)
+		{
+			Camera.SetPossitionZ(5.8);
+		}
+		if (Camera.GetPossition().x > -0.5 && Camera.GetPossition().x > -0.6 && Camera.GetPossition().x < 0.5 && Camera.GetPossition().z < 7.2 && Camera.GetPossition().z < 7.3 && Camera.GetPossition().z > 6.5)
+		{
+			Camera.SetPossitionZ(7.2);
+		}
+
+		if (Camera.GetPossition().x > -0.5 && Camera.GetPossition().x > -0.6 && Camera.GetPossition().x < 0.5 && Camera.GetPossition().z < 2.2 && Camera.GetPossition().z < 2.3 && Camera.GetPossition().z > 1.1)
+		{
+			Camera.SetPossitionX(-0.5);
+		}
+		if (Camera.GetPossition().x < 1.1 && Camera.GetPossition().x < 1.2 && Camera.GetPossition().x > 1 && Camera.GetPossition().z < 2.2 && Camera.GetPossition().z < 2.3 && Camera.GetPossition().z > 1.1)
+		{
+			Camera.SetPossitionX(1.1);
+		}
+		if (Camera.GetPossition().x > -0.5 && Camera.GetPossition().x > -0.6 && Camera.GetPossition().x < 0.5 && Camera.GetPossition().z > 0.8 && Camera.GetPossition().z > 0.7 && Camera.GetPossition().z < 1)
+		{
+			Camera.SetPossitionZ(0.8);
+		}
+		if (Camera.GetPossition().x > -0.5 && Camera.GetPossition().x > -0.6 && Camera.GetPossition().x < 0.5 && Camera.GetPossition().z < 2.35 && Camera.GetPossition().z < 2.5 && Camera.GetPossition().z > 1.5)
+		{
+			Camera.SetPossitionZ(2.35);
+		}
+
+
+
+		if (Camera.GetPossition().x > 7 && Camera.GetPossition().x > 6.9 && Camera.GetPossition().x < 7.1 && Camera.GetPossition().z < 6.7 && Camera.GetPossition().z > 6.0)
+		{
+			Camera.SetPossitionX(7);
+		}
+		if (Camera.GetPossition().x < 8.5 && Camera.GetPossition().x < 8.6 && Camera.GetPossition().x > 7.4 && Camera.GetPossition().z < 6.7 && Camera.GetPossition().z > 6.0)
+		{
+			Camera.SetPossitionX(8.5);
+		}
+		if (Camera.GetPossition().x < 8.5 && Camera.GetPossition().x < 8.6 && Camera.GetPossition().x > 7.4 && Camera.GetPossition().z > 5.8 && Camera.GetPossition().z > 5.7 && Camera.GetPossition().z < 6)
+		{
+			Camera.SetPossitionZ(5.8);
+		}
+		if (Camera.GetPossition().x < 8.5 && Camera.GetPossition().x < 8.6 && Camera.GetPossition().x > 7.4 && Camera.GetPossition().z < 7.2 && Camera.GetPossition().z < 7.3 && Camera.GetPossition().z > 6.5)
+		{
+			Camera.SetPossitionZ(7.2);
+		}
+
+		if (Camera.GetPossition().x > 7 && Camera.GetPossition().x > 6.9 && Camera.GetPossition().x < 7.1 && Camera.GetPossition().z < 2.2 && Camera.GetPossition().z < 2.3 && Camera.GetPossition().z > 1.1)
+		{
+			Camera.SetPossitionX(7);
+		}
+		if (Camera.GetPossition().x < 8.5 && Camera.GetPossition().x < 8.6 && Camera.GetPossition().x > 7.4 && Camera.GetPossition().z < 2.2 && Camera.GetPossition().z < 2.3 && Camera.GetPossition().z > 1.1)
+		{
+			Camera.SetPossitionX(8.5);
+		}
+		if (Camera.GetPossition().x < 8.5 && Camera.GetPossition().x < 8.6 && Camera.GetPossition().x > 7.1 && Camera.GetPossition().z > 0.8 && Camera.GetPossition().z > 0.7 && Camera.GetPossition().z < 1)
+		{
+			Camera.SetPossitionZ(0.8);
+		}
+		if (Camera.GetPossition().x < 8.5 && Camera.GetPossition().x < 8.6 && Camera.GetPossition().x > 7.1 && Camera.GetPossition().z < 2.35 && Camera.GetPossition().z < 2.5 && Camera.GetPossition().z > 1.5)
+		{
+			Camera.SetPossitionZ(2.35);
 		}
 
 	}
@@ -182,69 +243,93 @@ void Scene::render() {
 		//• Ambient materials affect the overall colour of the objectand is effected by the
 		//scene ambient light
 
-		glLightfv(GL_LIGHT4, GL_AMBIENT, Light_Ambient);
-		glLightfv(GL_LIGHT4, GL_DIFFUSE, Light_Diffuse);
-		glLightfv(GL_LIGHT4, GL_POSITION, Light_Position);
 
-
-		glLightf(GL_LIGHT4, GL_CONSTANT_ATTENUATION, 1.0);
-
-		glLightfv(GL_LIGHT4, GL_SPOT_DIRECTION, Spot_Direcion);
-		glLightf(GL_LIGHT4, GL_SPOT_CUTOFF, 45.0f);
-
-		glEnable(GL_LIGHT4);
-
-
-	glLightfv(GL_LIGHT0, GL_AMBIENT, Light_Ambient);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, Light_Diffuse);
-	glLightfv(GL_LIGHT0, GL_POSITION, Light_Position);
-
-
-	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1.0);
-
-
-//	glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 1);
-	//glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 1.0);
-
-
-	// The stop direction is the x y z direction the light will point to
+		// Torch Lights
+		// The spot direction is the x y z direction the light will point to
 	// Y = 1 means it goes up
 	// Spot_Cutoof is the cone of the light 
 	// The bigger the value the more it goes to the left and the right
 	// 5 would basically just be a straight line going up if Y is = 1
 	// Exponent controlls how concentrated the light is at the centre
-    glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, Spot_Direcion);
-	glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 45.0f);
-	//glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 1.0f);
+		//glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 1);
+		//glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 1.0);
+		//glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 1.0f);
+		//
+		glLightfv(GL_LIGHT0, GL_AMBIENT, Light_Ambient);
+		glLightfv(GL_LIGHT0, GL_DIFFUSE, Light_Diffuse);
+		glLightfv(GL_LIGHT0, GL_POSITION, Light_Position);
+		glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1.0);
+		glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, Spot_Direcion);
+		glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 29.0f);
+		glEnable(GL_LIGHT0);
+
+		/*glLightfv(GL_LIGHT1, GL_AMBIENT, Light_Ambient1);
+		glLightfv(GL_LIGHT1, GL_DIFFUSE, Light_Diffuse1);
+		glLightfv(GL_LIGHT1, GL_POSITION, Light_Position1);
+		glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, 1.0);
+		glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, Spot_Direcion1);
+		glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 25.0f);
+		glEnable(GL_LIGHT1);*/
+		//
+		// 
+		//
+		glLightfv(GL_LIGHT2, GL_AMBIENT, Light_Ambient2);
+		glLightfv(GL_LIGHT2, GL_DIFFUSE, Light_Diffuse2);
+		glLightfv(GL_LIGHT2, GL_POSITION, Light_Position2);
+		glLightf(GL_LIGHT2, GL_CONSTANT_ATTENUATION, 1.0);
+		glLightfv(GL_LIGHT2, GL_SPOT_DIRECTION, Spot_Direcion2);
+		glLightf(GL_LIGHT2, GL_SPOT_CUTOFF, 30.0f);
+		glEnable(GL_LIGHT2);
+
+		//glLightfv(GL_LIGHT3, GL_AMBIENT, Light_Ambient3);
+		//glLightfv(GL_LIGHT3, GL_DIFFUSE, Light_Diffuse3);
+		//glLightfv(GL_LIGHT3, GL_POSITION, Light_Position3);
+		//glLightf(GL_LIGHT3, GL_LINEAR_ATTENUATION, 1.0);
+		//glLightfv(GL_LIGHT3, GL_SPOT_DIRECTION, Spot_Direcion3);
+		//glLightf(GL_LIGHT3, GL_SPOT_CUTOFF, 25.0f);
+		//glEnable(GL_LIGHT3);
+		//
+		// 
+		//
+		glLightfv(GL_LIGHT4, GL_AMBIENT, Light_Ambient4);
+		glLightfv(GL_LIGHT4, GL_DIFFUSE, Light_Diffuse4);
+		glLightfv(GL_LIGHT4, GL_POSITION, Light_Position4);
+		glLightf(GL_LIGHT4, GL_CONSTANT_ATTENUATION, 1.0);
+		glLightfv(GL_LIGHT4, GL_SPOT_DIRECTION, Spot_Direcion4);
+		glLightf(GL_LIGHT4, GL_SPOT_CUTOFF, 25.0f);
+		glEnable(GL_LIGHT4);
 
 
-	glLightfv(GL_LIGHT1, GL_AMBIENT, Light_Ambient1);
-	glLightfv(GL_LIGHT1, GL_DIFFUSE, Light_Diffuse1);
-	glLightfv(GL_LIGHT1, GL_POSITION, Light_Position1);
+		glLightfv(GL_LIGHT5, GL_AMBIENT, Light_Ambient5);
+		glLightfv(GL_LIGHT5, GL_DIFFUSE, Light_Diffuse5);
+		glLightfv(GL_LIGHT5, GL_POSITION, Light_Position5);
+		glLightf(GL_LIGHT5, GL_CONSTANT_ATTENUATION, 1.0);
+		glLightfv(GL_LIGHT5, GL_SPOT_DIRECTION, Spot_Direcion5);
+		glLightf(GL_LIGHT5, GL_SPOT_CUTOFF, 25.0f);
+		glEnable(GL_LIGHT5);
+		//
+		//
+		//
+		glLightfv(GL_LIGHT6, GL_AMBIENT, Light_Ambient6);
+		glLightfv(GL_LIGHT6, GL_DIFFUSE, Light_Diffuse6);
+		glLightfv(GL_LIGHT6, GL_POSITION, Light_Position6);
+		glLightf(GL_LIGHT6, GL_CONSTANT_ATTENUATION, 1.0);
+		glLightfv(GL_LIGHT6, GL_SPOT_DIRECTION, Spot_Direcion6);
+		glLightf(GL_LIGHT6, GL_SPOT_CUTOFF, 25.0f);
+		glEnable(GL_LIGHT6);
 
-	glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, 1);
 
-	/*glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, Spot_Direcion1);
-	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 45.0f);
-	glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 0.0f);*/
+		glLightfv(GL_LIGHT7, GL_AMBIENT, Light_Ambient7);
+		glLightfv(GL_LIGHT7, GL_DIFFUSE, Light_Diffuse7);
+		glLightfv(GL_LIGHT7, GL_POSITION, Light_Position7);
+		glLightf(GL_LIGHT7, GL_CONSTANT_ATTENUATION, 1.0);
+		glLightfv(GL_LIGHT7, GL_SPOT_DIRECTION, Spot_Direcion7);
+		glLightf(GL_LIGHT7, GL_SPOT_CUTOFF, 25.0f);
+		glEnable(GL_LIGHT7);
+		//
 
-	glEnable(GL_LIGHT0);
-	//glEnable(GL_LIGHT1);
 
-	glLightfv(GL_LIGHT2, GL_AMBIENT, Light_Ambient2);
-	glLightfv(GL_LIGHT2, GL_DIFFUSE, Light_Diffuse2);
-	glLightfv(GL_LIGHT2, GL_POSITION, Light_Position2);
-
-	glLightfv(GL_LIGHT2, GL_SPOT_DIRECTION, Spot_Direcion2);
-	glLightf(GL_LIGHT2, GL_SPOT_CUTOFF, 25.0f);
-	glLightf(GL_LIGHT2, GL_SPOT_EXPONENT, 1.0f);
-
-	glLightfv(GL_LIGHT3, GL_AMBIENT, Light_Ambient3);
-	glLightfv(GL_LIGHT3, GL_DIFFUSE, Light_Diffuse3);
-	glLightfv(GL_LIGHT3, GL_POSITION, Light_Position3);
-
-	//glEnable(GL_LIGHT2);
-	//glEnable(GL_LIGHT3);
+	
 
 
 	// Render geometry/scene here -------------------------------------
@@ -479,20 +564,7 @@ void Scene::render() {
 		}
 	}
 
-	/*glPushMatrix();
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, Crate);
-	glTranslatef(-2.65, 1.5, 7);
-	glRotatef(90, 0, 1, 0);
-	glScalef(0.1, 0.1, 0.1);
-	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-	glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
-	glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
-	Cylinder.Render(1, 1, 6);
-	glBindTexture(GL_TEXTURE_2D, NULL);
-	glPopMatrix();*/
-
+	// this creates the 4 pillars in the room
 	glPushMatrix();
 	glEnable(GL_TEXTURE_2D);
 	glDisable(GL_COLOR_MATERIAL);
@@ -513,24 +585,97 @@ void Scene::render() {
 	Cylinder.Render(1, 1, 6);
 	glPopMatrix();
 
+
+	//
+	// Torches on the left wall 
 	glPushMatrix();
-	glTranslatef(-2.65, -0.5, 7);
+	glTranslatef(-2.65, -0.5, 4);
 	glRotatef(180, 0, 1, 0);
 	glScalef(0.5, 0.5, 0.5);
 	Torch.render();
 	glColor3f(1, 0.7, 0);
-	glTranslatef(TorchX,TorchY,TorchZ);
+	glTranslatef(TorchX,TorchY,0);
+	Sphere.Render(0.05, 20, 20);
+	glPopMatrix();
+	//
+
+	// Torches on front wall 
+	glPushMatrix();
+	glTranslatef(3.57f, -0.5, 8.45);
+	glRotatef(180, 0, 1, 0);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.5, 0.5, 0.5);
+	glColor3f(0, 0, 0);
+	Torch.render();
+	glRotatef(90, 0, -1, 0);
+	glColor3f(1, 0.7, 0);
+	glTranslatef(0, TorchY, -TorchZ);
 	Sphere.Render(0.05, 20, 20);
 	glPopMatrix();
 
 	glPushMatrix();
-	glTranslatef(-2.65, -0.5, 3);
+	glTranslatef(6.57f, -0.5, 8.45);
 	glRotatef(180, 0, 1, 0);
+	glRotatef(90, 0, 1, 0);
 	glScalef(0.5, 0.5, 0.5);
 	glColor3f(0, 0, 0);
 	Torch.render();
+	glRotatef(90, 0, -1, 0);
+	glColor3f(1, 0.7, 0);
+	glTranslatef(0, TorchY, -TorchZ);
+	Sphere.Render(0.05, 20, 20);
+	glPopMatrix();
+	//
+
+
+	// Torches on the right wall
+	glPushMatrix();
+	glTranslatef(10.65, -0.5, 4);
+	glRotatef(180, 0, 1, 0);
+	glRotatef(180, 0, 1, 0);
+	glScalef(0.5, 0.5, 0.5);
+	Torch.render();
 	glColor3f(1, 0.7, 0);
 	glTranslatef(TorchX, TorchY, 0);
+	Sphere.Render(0.05, 20, 20);
+	glPopMatrix();
+
+	//glPushMatrix();
+	//glTranslatef(10.65, -0.5, 2);
+	//glRotatef(180, 0, 1, 0);
+	//glRotatef(180, 0, 1, 0);
+	//glScalef(0.5, 0.5, 0.5);
+	//Torch.render();
+	//glColor3f(1, 0.7, 0);
+	//glTranslatef(TorchX, TorchY, 0);
+	//Sphere.Render(0.05, 20, 20);
+	//glPopMatrix();
+	//
+
+	// Torches on the back wall
+	glPushMatrix();
+	glTranslatef(3.57f, -0.0, -0.5);
+	glRotatef(180, 0, 1, 0);
+	glRotatef(90, 0, -1, 0);
+	glScalef(0.5, 0.5, 0.5);
+	glColor3f(0, 0, 0);
+	Torch.render();
+	glRotatef(90, 0, -1, 0);
+	glColor3f(1, 0.7, 0);
+	glTranslatef(0, TorchY, -TorchZ);
+	Sphere.Render(0.05, 20, 20);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(7.57f, -0.0, -0.5);
+	glRotatef(180, 0, 1, 0);
+	glRotatef(90, 0, -1, 0);
+	glScalef(0.5, 0.5, 0.5);
+	glColor3f(0, 0, 0);
+	Torch.render();
+	glRotatef(90, 0, -1, 0);
+	glColor3f(1, 0.7, 0);
+	glTranslatef(0, TorchY, -TorchZ);
 	Sphere.Render(0.05, 20, 20);
 	glPopMatrix();
 
@@ -543,7 +688,7 @@ void Scene::render() {
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 	glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
 	glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
-	glTranslatef(3.57, -1.0, 1.5);
+	glTranslatef(3.57, 0.0, 1.5);
 	Sphere.Render(Size, Seg, Seg);
 	
 	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_ambient_colour);

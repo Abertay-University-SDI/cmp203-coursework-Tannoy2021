@@ -85,43 +85,72 @@ protected:
 	float rotation = 0;
 
 
+	// These 3 floats are used for rendering a sphere inside the metal torch
+	// this way the sphere is fit perfectly 
 	float TorchX = -0.37f;
 	float TorchY = 0.6f;
-	float TorchZ = 0;
+	float TorchZ = -0.37;
 
 	bool FirstPerson = false;
 
 
 	//Lights 
-
-	/*GLfloat Light_Ambient[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
-	GLfloat Light_Diffuse[4] = { 1.f, 1.f, 1.f, 1.0f };*/
-
-	GLfloat Light_Ambient[4] = { 0.9f, 0.9f, 0.9f, 1.0f };
-	GLfloat Light_Diffuse[4] = { 0.4f, 0.4f, 0.4f, 0.0f };
-
-	GLfloat Light_Ambient1[4] = { 0.2f, 0.2f, 0.2f, 1.0f };
-	GLfloat Light_Diffuse1[4] = { 0.4f, 0.4f, 0.4f, 1.0f };
-
-	// The possitions are inverted
+	// 	// The possitions are inverted
 	// a 1 will shine in the negative direction
 	// while -1 will shine in the possitive direction
-
-	// The last value is called W 
+	// // The last value is called W 
 	// if its 0 its a directional light 
 	// if its 1 the light starts from the possition 
-	GLfloat Light_Position[4] = { -2.87f, -1.7f, 7.f, 1.0f };
-	GLfloat Light_Position1[4] = { 3.57f, -12.f, 2.f, 1.0f };
+	//Torch Lights 
+	// Torches on the Left wall 
+	GLfloat Light_Ambient[4] = { 0.9f, 0.9f, 0.9f, 1.0f };
+	GLfloat Light_Diffuse[4] = { 1.f, 1.f, 1.f, 1.0f };
+	GLfloat Light_Position[4] = { -2.87f, -1.7f, 4.f, 1.0f };
+	GLfloat Spot_Direcion[3] = { 0.1f, 1.0f,0.0f };
+
+	/*GLfloat Light_Ambient1[4] = { 0.9f, 0.9f, 0.9f, 1.0f };
+	GLfloat Light_Diffuse1[4] = { 1.f, 1.f, 1.f, 1.0f };
+	GLfloat Light_Position1[4] = { -2.87f, -1.7f, 2.f, 1.0f };
+	GLfloat Spot_Direcion1[3] = { -0.0f, 1.0f,0.0f };*/
+
+	// Torches on the right wall
+
+	GLfloat Light_Ambient2[4] = { 0.9f, 0.9f, 0.9f, 1.0f };
+	GLfloat Light_Diffuse2[4] = { 1.f, 1.f, 1.f, 1.0f };
+	GLfloat Light_Position2[4] = { 10.87f, -1.2f, 4.f, 1.0f };
+	GLfloat Spot_Direcion2[3] = { -0.2f, 1.0f,0.0f };
+
+	//GLfloat Light_Ambient3[4] = { 0.9f, 0.9f, 0.9f, 1.0f };
+	//GLfloat Light_Diffuse3[4] = { 1.f, 1.f, 1.f, 1.0f };
+	//GLfloat Light_Position3[4] = { 10.87f, -1.2f, 2.f, 1.0f };
+	//GLfloat Spot_Direcion3[3] = { -0.1f, 1.0f,0.0f };
 
 
-	GLfloat Spot_Direcion[3] = { 0.0f, 1.0f,0.0f };
-	GLfloat Spot_Direcion1[3] = { 0.0f, 1.0f,0.0f };
+	// Torches on the front wall 
 
-	
 	GLfloat Light_Ambient4[4] = { 0.9f, 0.9f, 0.9f, 1.0f };
 	GLfloat Light_Diffuse4[4] = { 0.4f, 0.4f, 0.4f, 0.0f };
 	GLfloat Light_Position4[4] = { 3.57f, -1.7f, 8.f, 1.0f };
-	GLfloat Spot_Direcion4[3] = { 0.0f, 1.0f,0.0f };
+	GLfloat Spot_Direcion4[3] = { 0.0f, 1.0f,-0.2f };
+
+	GLfloat Light_Ambient5[4] = { 0.9f, 0.9f, 0.9f, 1.0f };
+	GLfloat Light_Diffuse5[4] = { 0.4f, 0.4f, 0.4f, 0.0f };
+	GLfloat Light_Position5[4] = { 6.57f, -1.7f, 8.f, 1.0f };
+	GLfloat Spot_Direcion5[3] = { 0.0f, 1.0f,-0.2f };
+
+	// Torches on the back wall
+
+	GLfloat Light_Ambient6[4] = { 0.9f, 0.9f, 0.9f, 1.0f };
+	GLfloat Light_Diffuse6[4] = { 0.4f, 0.4f, 0.4f, 0.0f };
+	GLfloat Light_Position6[4] = { 3.57f, -1.7f, 0.f, 1.0f };
+	GLfloat Spot_Direcion6[3] = { 0.0f, 1.0f,0.2f };
+
+	GLfloat Light_Ambient7[4] = { 0.9f, 0.9f, 0.9f, 1.0f };
+	GLfloat Light_Diffuse7[4] = { 0.4f, 0.4f, 0.4f, 0.0f };
+	GLfloat Light_Position7[4] = { 7.57f, -1.7f, 0.f, 1.0f };
+	GLfloat Spot_Direcion7[3] = { 0.0f, 1.0f,0.2f };
+
+
 
 
 	//Materials 
@@ -135,18 +164,6 @@ protected:
 	GLfloat high_shininess = 100;
 	GLfloat mat_emission[4] = { 0.0, 0.0, 0.0, 0.0 };
 
-
-
-	GLfloat Light_Ambient2[4] = { 0.9f, 0.9f, 0.9f, 1.0f };
-	GLfloat Light_Diffuse2[4] = { 1.f, 1.f, 1.f, 1.0f };
-
-	GLfloat Light_Ambient3[4] = { 0.2f, 0.2f, 0.2f, 1.0f };
-	GLfloat Light_Diffuse3[4] = { 1.f, 1.f, 1.f, 1.0f };
-
-	GLfloat Light_Position2[4] = { -2.87f, -1.7f,3.0f, 1.0f };
-	GLfloat Light_Position3[4] = { 25.0f, -5.f,10.0f, 1.0f };
-
-	GLfloat Spot_Direcion2[3] = { 0.0f, 1.0f,0.0f };
 
 };
 
