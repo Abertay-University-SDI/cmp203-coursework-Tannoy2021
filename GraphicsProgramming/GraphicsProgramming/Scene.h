@@ -97,10 +97,10 @@ protected:
 	/*GLfloat Light_Ambient[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
 	GLfloat Light_Diffuse[4] = { 1.f, 1.f, 1.f, 1.0f };*/
 
-	GLfloat Light_Ambient[4] = { 0.4f, 0.4f, 0.4f, 1.0f };
-	GLfloat Light_Diffuse[4] = { 0.4f, 0.4f, 0.4f, 1.0f };
+	GLfloat Light_Ambient[4] = { 0.9f, 0.9f, 0.9f, 1.0f };
+	GLfloat Light_Diffuse[4] = { 0.4f, 0.4f, 0.4f, 0.0f };
 
-	GLfloat Light_Ambient1[4] = { 0.2f, 0.2f, 0.0f, 1.0f };
+	GLfloat Light_Ambient1[4] = { 0.2f, 0.2f, 0.2f, 1.0f };
 	GLfloat Light_Diffuse1[4] = { 0.4f, 0.4f, 0.4f, 1.0f };
 
 	// The possitions are inverted
@@ -110,12 +110,18 @@ protected:
 	// The last value is called W 
 	// if its 0 its a directional light 
 	// if its 1 the light starts from the possition 
-	GLfloat Light_Position[4] = { -2.27f, -1.7f,7.0f, 1.0f };
-	GLfloat Light_Position1[4] = { 3.57f, -12.f, 0.f, 1.0f };
+	GLfloat Light_Position[4] = { -2.87f, -1.7f, 7.f, 1.0f };
+	GLfloat Light_Position1[4] = { 3.57f, -12.f, 2.f, 1.0f };
 
 
-	GLfloat Spot_Direcion[3] = { -0.1f, 1.0f,0.0f };
+	GLfloat Spot_Direcion[3] = { 0.0f, 1.0f,0.0f };
 	GLfloat Spot_Direcion1[3] = { 0.0f, 1.0f,0.0f };
+
+	
+	GLfloat Light_Ambient4[4] = { 0.9f, 0.9f, 0.9f, 1.0f };
+	GLfloat Light_Diffuse4[4] = { 0.4f, 0.4f, 0.4f, 0.0f };
+	GLfloat Light_Position4[4] = { 3.57f, -1.7f, 8.f, 1.0f };
+	GLfloat Spot_Direcion4[3] = { 0.0f, 1.0f,0.0f };
 
 
 	//Materials 
@@ -127,18 +133,20 @@ protected:
 	GLfloat no_shininess = 0.0;
 	GLfloat low_shininess = 50;
 	GLfloat high_shininess = 100;
-	GLfloat mat_emission[4] = { 0.3, 0.2, 0.2, 0.0 };
+	GLfloat mat_emission[4] = { 0.0, 0.0, 0.0, 0.0 };
 
 
 
-	GLfloat Light_Ambient2[4] = { 0.2f, 0.2f, 0.2f, 1.0f };
+	GLfloat Light_Ambient2[4] = { 0.9f, 0.9f, 0.9f, 1.0f };
 	GLfloat Light_Diffuse2[4] = { 1.f, 1.f, 1.f, 1.0f };
 
 	GLfloat Light_Ambient3[4] = { 0.2f, 0.2f, 0.2f, 1.0f };
 	GLfloat Light_Diffuse3[4] = { 1.f, 1.f, 1.f, 1.0f };
 
-	GLfloat Light_Position2[4] = { 25.0f, -5.f,25.0f, 1.0f };
+	GLfloat Light_Position2[4] = { -2.87f, -1.7f,3.0f, 1.0f };
 	GLfloat Light_Position3[4] = { 25.0f, -5.f,10.0f, 1.0f };
+
+	GLfloat Spot_Direcion2[3] = { 0.0f, 1.0f,0.0f };
 
 };
 

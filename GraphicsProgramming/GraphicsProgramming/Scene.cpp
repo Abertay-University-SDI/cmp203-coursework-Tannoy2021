@@ -182,6 +182,17 @@ void Scene::render() {
 		//• Ambient materials affect the overall colour of the objectand is effected by the
 		//scene ambient light
 
+		glLightfv(GL_LIGHT4, GL_AMBIENT, Light_Ambient);
+		glLightfv(GL_LIGHT4, GL_DIFFUSE, Light_Diffuse);
+		glLightfv(GL_LIGHT4, GL_POSITION, Light_Position);
+
+
+		glLightf(GL_LIGHT4, GL_CONSTANT_ATTENUATION, 1.0);
+
+		glLightfv(GL_LIGHT4, GL_SPOT_DIRECTION, Spot_Direcion);
+		glLightf(GL_LIGHT4, GL_SPOT_CUTOFF, 45.0f);
+
+		glEnable(GL_LIGHT4);
 
 
 	glLightfv(GL_LIGHT0, GL_AMBIENT, Light_Ambient);
@@ -189,9 +200,11 @@ void Scene::render() {
 	glLightfv(GL_LIGHT0, GL_POSITION, Light_Position);
 
 
-	//glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1.0);
-	glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 1);
-	//glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.15);
+	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1.0);
+
+
+//	glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 1);
+	//glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 1.0);
 
 
 	// The stop direction is the x y z direction the light will point to
@@ -201,8 +214,8 @@ void Scene::render() {
 	// 5 would basically just be a straight line going up if Y is = 1
 	// Exponent controlls how concentrated the light is at the centre
     glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, Spot_Direcion);
-	glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 25.0f);
-	glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 1.0f);
+	glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 45.0f);
+	//glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 1.0f);
 
 
 	glLightfv(GL_LIGHT1, GL_AMBIENT, Light_Ambient1);
@@ -211,9 +224,9 @@ void Scene::render() {
 
 	glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, 1);
 
-	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, Spot_Direcion1);
+	/*glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, Spot_Direcion1);
 	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 45.0f);
-	glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 0.0f);
+	glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 0.0f);*/
 
 	glEnable(GL_LIGHT0);
 	//glEnable(GL_LIGHT1);
@@ -221,6 +234,10 @@ void Scene::render() {
 	glLightfv(GL_LIGHT2, GL_AMBIENT, Light_Ambient2);
 	glLightfv(GL_LIGHT2, GL_DIFFUSE, Light_Diffuse2);
 	glLightfv(GL_LIGHT2, GL_POSITION, Light_Position2);
+
+	glLightfv(GL_LIGHT2, GL_SPOT_DIRECTION, Spot_Direcion2);
+	glLightf(GL_LIGHT2, GL_SPOT_CUTOFF, 25.0f);
+	glLightf(GL_LIGHT2, GL_SPOT_EXPONENT, 1.0f);
 
 	glLightfv(GL_LIGHT3, GL_AMBIENT, Light_Ambient3);
 	glLightfv(GL_LIGHT3, GL_DIFFUSE, Light_Diffuse3);
@@ -343,7 +360,7 @@ void Scene::render() {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LIGHTING);
 	glPopMatrix();
-	
+	glEnable(GL_LIGHTING);
 	glDisable(GL_COLOR_MATERIAL);
 
 	//Floor
@@ -362,7 +379,6 @@ void Scene::render() {
 			glRotatef(90, 1, 0, 0);
 			glScalef(0.0067 * 2, 0.0067 * 2, 0.0067 * 2);
 			My_model.render();
-			glEnable(GL_COLOR_MATERIAL);
 			glPopMatrix();
 		}
 	}
@@ -382,7 +398,6 @@ void Scene::render() {
 			glRotatef(90, 1, 0, 0);
 			glScalef(0.0067 * 2, 0.0067 * 2, 0.0067 * 2);
 			My_model.render();
-			glEnable(GL_COLOR_MATERIAL);
 			glPopMatrix();
 		}
 	}
@@ -403,7 +418,6 @@ void Scene::render() {
 			glRotatef(90,1,0,0);
 			glScalef(0.0067 * 2, 0.0067 * 2, 0.0067 * 2);
 			My_model.render();
-			glEnable(GL_COLOR_MATERIAL);
 			glPopMatrix();
 		}
 	}
@@ -420,10 +434,9 @@ void Scene::render() {
 			glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 			glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
 			glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
-			glRotatef(90, 1, 0, 0);
+			glRotatef(180, 1, 0, 0);
 			glScalef(0.0067 * 2, 0.0067 * 2, 0.0067 * 2);
 			My_model.render();
-			glEnable(GL_COLOR_MATERIAL);
 			glPopMatrix();
 		}
 	}
@@ -443,7 +456,6 @@ void Scene::render() {
 			glRotatef(90, 1, 0, 0);
 			glScalef(0.003, 0.0067 * 2, 0.0067 * 2);
 			My_model.render();
-			glEnable(GL_COLOR_MATERIAL);
 			glPopMatrix();
 		}
 	}
@@ -463,7 +475,6 @@ void Scene::render() {
 			glRotatef(90, 1, 0, 0);
 			glScalef(0.003, 0.0067 * 2, 0.0067 * 2);
 			My_model.render();
-			glEnable(GL_COLOR_MATERIAL);
 			glPopMatrix();
 		}
 	}
