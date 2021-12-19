@@ -21,6 +21,7 @@ Scene::Scene(Input *in)
 	Skybox = SOIL_load_OGL_texture("gfx/skybox.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
 	Crate = SOIL_load_OGL_texture("gfx/crate.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
 	Block = SOIL_load_OGL_texture("models/breakables_ground_c.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
+	Sun = SOIL_load_OGL_texture("gfx/the-background-gff2095af4_640.jpg", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	// Initialise scene variables
 	/*Disk.Calculate(1, 50);*/
@@ -56,6 +57,27 @@ void Scene::handleInput(float dt,Input* in)
 		EnableWireframe = false;
 	}
 
+	if (in->isKeyDown('n'))
+	{
+		SunX += SunX * dt;
+		glLightfv(GL_LIGHT3, GL_POSITION, Light_Position3);
+	}
+	if (in->isKeyDown('m'))
+	{
+		SunX -= SunX * dt;
+		glLightfv(GL_LIGHT3, GL_POSITION, Light_Position3);
+	}
+	if (in->isKeyDown('j'))
+	{
+		SunZ += SunZ * dt;
+		glLightfv(GL_LIGHT3, GL_POSITION, Light_Position3);
+	}
+	if (in->isKeyDown('k'))
+	{
+		SunZ -= SunZ * dt;
+		glLightfv(GL_LIGHT3, GL_POSITION, Light_Position3);
+	}
+	/*glLightfv(GL_LIGHT3, GL_POSITION, Light_Position3);*/
 	// Enables first person and disables Ghost mode
 	if (in->isKeyDown('f'))
 	{
@@ -84,7 +106,6 @@ void Scene::handleInput(float dt,Input* in)
 			Camera.SetPossitionY(-0.9);
 		}*/
 		//Testing restricted Y camera
-
 		/*if (Camera.GetPossition().y < -0.9 && Camera.GetPossition().y < 1)
 		{
 			Camera.SetPossitionY(-0.9);
@@ -179,7 +200,7 @@ void Scene::handleInput(float dt,Input* in)
 
 void Scene::update(float dt)
 {
-
+	
 	// update scene related variables.
 	if (EnableWireframe == true)
 	{
@@ -219,9 +240,11 @@ void Scene::update(float dt)
 			}
 			ButtonTime = 0.3f;
 		}
-		// Calculate FPS for output
-		calculateFPS();
+		
 	}
+	//glLightfv(GL_LIGHT3, GL_POSITION, Light_Position3);
+	// Calculate FPS for output
+	calculateFPS();
 }
 
 void Scene::render() {
@@ -244,6 +267,20 @@ void Scene::render() {
 		//scene ambient light
 
 
+
+
+		//Sun Lights set up
+		glLightfv(GL_LIGHT3, GL_AMBIENT, Light_Ambient3);
+	    //glLightfv(GL_LIGHT3, GL_POSITION, Light_Position3);
+		glLightf(GL_LIGHT3, GL_LINEAR_ATTENUATION, 1);
+		glEnable(GL_LIGHT3);
+
+
+		//
+		
+		
+		
+		
 		// Torch Lights
 		// The spot direction is the x y z direction the light will point to
 	// Y = 1 means it goes up
@@ -260,7 +297,7 @@ void Scene::render() {
 		glLightfv(GL_LIGHT0, GL_POSITION, Light_Position);
 		glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1.0);
 		glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, Spot_Direcion);
-		glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 29.0f);
+		glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 45.0f);
 		glEnable(GL_LIGHT0);
 
 		/*glLightfv(GL_LIGHT1, GL_AMBIENT, Light_Ambient1);
@@ -280,16 +317,6 @@ void Scene::render() {
 		glLightfv(GL_LIGHT2, GL_SPOT_DIRECTION, Spot_Direcion2);
 		glLightf(GL_LIGHT2, GL_SPOT_CUTOFF, 30.0f);
 		glEnable(GL_LIGHT2);
-
-		//glLightfv(GL_LIGHT3, GL_AMBIENT, Light_Ambient3);
-		//glLightfv(GL_LIGHT3, GL_DIFFUSE, Light_Diffuse3);
-		//glLightfv(GL_LIGHT3, GL_POSITION, Light_Position3);
-		//glLightf(GL_LIGHT3, GL_LINEAR_ATTENUATION, 1.0);
-		//glLightfv(GL_LIGHT3, GL_SPOT_DIRECTION, Spot_Direcion3);
-		//glLightf(GL_LIGHT3, GL_SPOT_CUTOFF, 25.0f);
-		//glEnable(GL_LIGHT3);
-		//
-		// 
 		//
 		glLightfv(GL_LIGHT4, GL_AMBIENT, Light_Ambient4);
 		glLightfv(GL_LIGHT4, GL_DIFFUSE, Light_Diffuse4);
@@ -468,7 +495,7 @@ void Scene::render() {
 		}
 	}
 	//Roof
-	for (int Xside = 0; Xside < 7; Xside++)
+	for (int Xside = 1; Xside < 7; Xside++)
 	{
 		glColor3f(1, 1, 1);
 		for (int Zside = 0; Zside < 5; Zside++)
@@ -480,10 +507,14 @@ void Scene::render() {
 			glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 			glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
 			glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
-			glRotatef(90, 1, 0, 0);
+			glRotatef(180, 1, 0, 0);
 			glScalef(0.0067 * 2, 0.0067 * 2, 0.0067 * 2);
 			My_model.render();
 			glPopMatrix();
+			if (Xside == 3)
+			{
+				Xside = 5;
+			}
 		}
 	}
 	//Back wall
@@ -538,7 +569,7 @@ void Scene::render() {
 			glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 			glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
 			glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
-			glRotatef(90, 1, 0, 0);
+			glRotatef(180, 1, 0, 0);
 			glScalef(0.003, 0.0067 * 2, 0.0067 * 2);
 			My_model.render();
 			glPopMatrix();
@@ -557,7 +588,7 @@ void Scene::render() {
 			glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 			glMateriali(GL_FRONT, GL_SHININESS, low_shininess);
 			glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
-			glRotatef(90, 1, 0, 0);
+			glRotatef(180, 1, 0, 0);
 			glScalef(0.003, 0.0067 * 2, 0.0067 * 2);
 			My_model.render();
 			glPopMatrix();
@@ -704,6 +735,13 @@ void Scene::render() {
 	glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
 	glTranslatef(-4, 0, 2.5);
 	Sphere.Render(Size, Seg, Seg);
+	glPopMatrix();
+
+	glPushMatrix();
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, Sun);
+	glTranslatef(SunX, 25, SunZ);
+	Sphere.Render(1,20,20);
 	glPopMatrix();
 
 	/*glPushMatrix();
