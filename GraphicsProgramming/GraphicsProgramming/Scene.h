@@ -67,6 +67,7 @@ protected:
 	GLuint Skybox;
 	GLuint Block;
 	GLuint Sun;
+	Shadow Shadows;
 	
 	Disk Disk;
 	Sphere Sphere;
@@ -98,6 +99,9 @@ protected:
 	float SunX = 3.57f;
 	float SunZ = 4.f;
 
+	float MoonX = 50;
+	float MoonZ = 4.f;
+
 	//Lights 
 	// 	// The possitions are inverted
 	// a 1 will shine in the negative direction
@@ -113,7 +117,10 @@ protected:
 	GLfloat Light_Ambient3[4] = { 0.4f, 0.4f, 0.4f, 1.0f };
 	GLfloat Light_Position3[4] = { SunX,-3,SunZ, 1.0f };
 
+	// Moon light set up
 
+	GLfloat Light_Ambient1[4] = { 0.1f, 0.1f, 0.1f, 1.0f };
+	GLfloat Light_Position1[4] = { MoonX,-3,MoonZ, 1.0f };
 
 
 

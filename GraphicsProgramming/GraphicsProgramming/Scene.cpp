@@ -57,7 +57,19 @@ void Scene::handleInput(float dt,Input* in)
 		EnableWireframe = false;
 	}
 
+	if (in->isKeyDown('m'))
+	{
+		SunX = 50;
+		MoonX = 3.57;
+		glLightfv(GL_LIGHT1, GL_POSITION, Light_Position1);
+	}
 	if (in->isKeyDown('n'))
+	{
+		SunX = 3.57;
+		MoonX = 50;
+		glLightfv(GL_LIGHT1, GL_POSITION, Light_Position1);
+	}
+	/*if (in->isKeyDown('n'))
 	{
 		SunX += SunX * dt;
 		glLightfv(GL_LIGHT3, GL_POSITION, Light_Position3);
@@ -76,7 +88,7 @@ void Scene::handleInput(float dt,Input* in)
 	{
 		SunZ -= SunZ * dt;
 		glLightfv(GL_LIGHT3, GL_POSITION, Light_Position3);
-	}
+	}*/
 	/*glLightfv(GL_LIGHT3, GL_POSITION, Light_Position3);*/
 	// Enables first person and disables Ghost mode
 	if (in->isKeyDown('f'))
@@ -242,7 +254,10 @@ void Scene::update(float dt)
 		}
 		
 	}
-	//glLightfv(GL_LIGHT3, GL_POSITION, Light_Position3);
+	glLightfv(GL_LIGHT3, GL_AMBIENT, Light_Ambient3);
+	glLightfv(GL_LIGHT3, GL_POSITION, Light_Position3);
+	glLightf(GL_LIGHT3, GL_LINEAR_ATTENUATION, 1);
+	glEnable(GL_LIGHT3);
 	// Calculate FPS for output
 	calculateFPS();
 }
@@ -274,6 +289,11 @@ void Scene::render() {
 	    //glLightfv(GL_LIGHT3, GL_POSITION, Light_Position3);
 		glLightf(GL_LIGHT3, GL_LINEAR_ATTENUATION, 1);
 		glEnable(GL_LIGHT3);
+
+		glLightfv(GL_LIGHT1, GL_AMBIENT, Light_Ambient1);
+		//glLightfv(GL_LIGHT1, GL_POSITION, Light_Position1);
+		glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, 1);
+		glEnable(GL_LIGHT1);
 
 
 		//
