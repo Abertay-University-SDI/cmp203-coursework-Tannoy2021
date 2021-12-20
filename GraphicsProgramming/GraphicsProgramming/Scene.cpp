@@ -59,37 +59,15 @@ void Scene::handleInput(float dt,Input* in)
 
 	if (in->isKeyDown('m'))
 	{
+		glDisable(GL_LIGHT3);
 		SunX = 50;
-		MoonX = 3.57;
-		glLightfv(GL_LIGHT1, GL_POSITION, Light_Position1);
 	}
 	if (in->isKeyDown('n'))
 	{
+		glEnable(GL_LIGHT3);
 		SunX = 3.57;
-		MoonX = 50;
-		glLightfv(GL_LIGHT1, GL_POSITION, Light_Position1);
 	}
-	/*if (in->isKeyDown('n'))
-	{
-		SunX += SunX * dt;
-		glLightfv(GL_LIGHT3, GL_POSITION, Light_Position3);
-	}
-	if (in->isKeyDown('m'))
-	{
-		SunX -= SunX * dt;
-		glLightfv(GL_LIGHT3, GL_POSITION, Light_Position3);
-	}
-	if (in->isKeyDown('j'))
-	{
-		SunZ += SunZ * dt;
-		glLightfv(GL_LIGHT3, GL_POSITION, Light_Position3);
-	}
-	if (in->isKeyDown('k'))
-	{
-		SunZ -= SunZ * dt;
-		glLightfv(GL_LIGHT3, GL_POSITION, Light_Position3);
-	}*/
-	/*glLightfv(GL_LIGHT3, GL_POSITION, Light_Position3);*/
+
 	// Enables first person and disables Ghost mode
 	if (in->isKeyDown('f'))
 	{
@@ -101,7 +79,34 @@ void Scene::handleInput(float dt,Input* in)
 	{
 		FirstPerson = false;
 	}
-
+	if (in->isKeyDown('r'))
+	{
+		Yellow = false;
+		Red = true;
+		Green = false;
+		Dull = false;
+	}
+	if (in->isKeyDown('y'))
+	{
+		Yellow = true;
+		Red = false;
+		Green = false;
+		Dull = false;
+	}
+	if (in->isKeyDown('b'))
+	{
+		Yellow = false;
+		Red = false;
+		Green = true; 
+		Dull = false;
+	}
+	if (in->isKeyDown('u'))
+	{
+		Yellow = false;
+		Red = false;
+		Green = false;
+		Dull = true;
+	}
 	//Makeshift collision 
 	if (FirstPerson == true)
 	{
@@ -207,12 +212,69 @@ void Scene::handleInput(float dt,Input* in)
 			Camera.SetPossitionZ(2.35);
 		}
 
+
+		if (Camera.GetPossition().x > 2.77 && Camera.GetPossition().x < 3.67 && Camera.GetPossition().z > 3.3 && Camera.GetPossition().z > 2.9 && Camera.GetPossition().z < 4.6)
+		{
+			Camera.SetPossitionX(2.77);
+		}
+		if (Camera.GetPossition().x < 4.47 && Camera.GetPossition().x > 4.4 && Camera.GetPossition().z > 3.3 && Camera.GetPossition().z > 2.9 && Camera.GetPossition().z < 4.6)
+		{
+			Camera.SetPossitionX(4.47);
+		}
+		if (Camera.GetPossition().x > 2.77 && Camera.GetPossition().x < 4.4 && Camera.GetPossition().z > 3.0 && Camera.GetPossition().z > 2.9 && Camera.GetPossition().z < 4.5)
+		{
+			Camera.SetPossitionZ(3.0);
+		}
+		if (Camera.GetPossition().x > 2.77 && Camera.GetPossition().x < 4.4 && Camera.GetPossition().z < 4.8 && Camera.GetPossition().z < 4.9 && Camera.GetPossition().z > 4)
+		{
+			Camera.SetPossitionZ(4.8);
+		}
 	}
 }
 
 void Scene::update(float dt)
 {
-	
+	if (Yellow == true)
+	{
+		glLightfv(GL_LIGHT0, GL_AMBIENT, Light_Ambient);
+		glLightfv(GL_LIGHT2, GL_AMBIENT, Light_Ambient2);
+		glLightfv(GL_LIGHT3, GL_AMBIENT, Light_Ambient3);
+		glLightfv(GL_LIGHT4, GL_AMBIENT, Light_Ambient3);
+		glLightfv(GL_LIGHT5, GL_AMBIENT, Light_Ambient3);
+		glLightfv(GL_LIGHT6, GL_AMBIENT, Light_Ambient3);
+		glLightfv(GL_LIGHT7, GL_AMBIENT, Light_Ambient3);
+	}
+	if (Red == true)
+	{
+		glLightfv(GL_LIGHT0, GL_AMBIENT, Red_Ambient);
+		glLightfv(GL_LIGHT2, GL_AMBIENT, Red_Ambient);
+		glLightfv(GL_LIGHT3, GL_AMBIENT, Red_Ambient);
+		glLightfv(GL_LIGHT4, GL_AMBIENT, Red_Ambient);
+		glLightfv(GL_LIGHT5, GL_AMBIENT, Red_Ambient);
+		glLightfv(GL_LIGHT6, GL_AMBIENT, Red_Ambient);
+		glLightfv(GL_LIGHT7, GL_AMBIENT, Red_Ambient);
+	}
+	if (Green == true)
+	{
+		glLightfv(GL_LIGHT0, GL_AMBIENT, Green_Ambient);
+		glLightfv(GL_LIGHT2, GL_AMBIENT, Green_Ambient);
+		glLightfv(GL_LIGHT3, GL_AMBIENT, Green_Ambient);
+		glLightfv(GL_LIGHT4, GL_AMBIENT, Green_Ambient);
+		glLightfv(GL_LIGHT5, GL_AMBIENT, Green_Ambient);
+		glLightfv(GL_LIGHT6, GL_AMBIENT, Green_Ambient);
+		glLightfv(GL_LIGHT7, GL_AMBIENT, Green_Ambient);
+	}
+	if (Dull == true)
+	{
+		glLightfv(GL_LIGHT0, GL_AMBIENT, Dull_Ambient);
+		glLightfv(GL_LIGHT2, GL_AMBIENT, Dull_Ambient);
+		glLightfv(GL_LIGHT3, GL_AMBIENT, Dull_Ambient);
+		glLightfv(GL_LIGHT4, GL_AMBIENT, Dull_Ambient);
+		glLightfv(GL_LIGHT5, GL_AMBIENT, Dull_Ambient);
+		glLightfv(GL_LIGHT6, GL_AMBIENT, Dull_Ambient);
+		glLightfv(GL_LIGHT7, GL_AMBIENT, Dull_Ambient);
+	}
+
 	// update scene related variables.
 	if (EnableWireframe == true)
 	{
@@ -254,10 +316,10 @@ void Scene::update(float dt)
 		}
 		
 	}
-	glLightfv(GL_LIGHT3, GL_AMBIENT, Light_Ambient3);
+
 	glLightfv(GL_LIGHT3, GL_POSITION, Light_Position3);
 	glLightf(GL_LIGHT3, GL_LINEAR_ATTENUATION, 1);
-	glEnable(GL_LIGHT3);
+	/*glEnable(GL_LIGHT3);*/
 	// Calculate FPS for output
 	calculateFPS();
 }
@@ -282,25 +344,8 @@ void Scene::render() {
 		//scene ambient light
 
 
-
-
-		//Sun Lights set up
-		glLightfv(GL_LIGHT3, GL_AMBIENT, Light_Ambient3);
-	    //glLightfv(GL_LIGHT3, GL_POSITION, Light_Position3);
-		glLightf(GL_LIGHT3, GL_LINEAR_ATTENUATION, 1);
-		glEnable(GL_LIGHT3);
-
-		glLightfv(GL_LIGHT1, GL_AMBIENT, Light_Ambient1);
-		//glLightfv(GL_LIGHT1, GL_POSITION, Light_Position1);
-		glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, 1);
-		glEnable(GL_LIGHT1);
-
-
 		//
-		
-		
-		
-		
+	
 		// Torch Lights
 		// The spot direction is the x y z direction the light will point to
 	// Y = 1 means it goes up
@@ -312,7 +357,7 @@ void Scene::render() {
 		//glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 1.0);
 		//glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 1.0f);
 		//
-		glLightfv(GL_LIGHT0, GL_AMBIENT, Light_Ambient);
+
 		glLightfv(GL_LIGHT0, GL_DIFFUSE, Light_Diffuse);
 		glLightfv(GL_LIGHT0, GL_POSITION, Light_Position);
 		glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1.0);
@@ -320,17 +365,11 @@ void Scene::render() {
 		glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 45.0f);
 		glEnable(GL_LIGHT0);
 
-		/*glLightfv(GL_LIGHT1, GL_AMBIENT, Light_Ambient1);
-		glLightfv(GL_LIGHT1, GL_DIFFUSE, Light_Diffuse1);
-		glLightfv(GL_LIGHT1, GL_POSITION, Light_Position1);
-		glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, 1.0);
-		glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, Spot_Direcion1);
-		glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 25.0f);
-		glEnable(GL_LIGHT1);*/
+
 		//
 		// 
 		//
-		glLightfv(GL_LIGHT2, GL_AMBIENT, Light_Ambient2);
+
 		glLightfv(GL_LIGHT2, GL_DIFFUSE, Light_Diffuse2);
 		glLightfv(GL_LIGHT2, GL_POSITION, Light_Position2);
 		glLightf(GL_LIGHT2, GL_CONSTANT_ATTENUATION, 1.0);
@@ -338,7 +377,7 @@ void Scene::render() {
 		glLightf(GL_LIGHT2, GL_SPOT_CUTOFF, 30.0f);
 		glEnable(GL_LIGHT2);
 		//
-		glLightfv(GL_LIGHT4, GL_AMBIENT, Light_Ambient4);
+		
 		glLightfv(GL_LIGHT4, GL_DIFFUSE, Light_Diffuse4);
 		glLightfv(GL_LIGHT4, GL_POSITION, Light_Position4);
 		glLightf(GL_LIGHT4, GL_CONSTANT_ATTENUATION, 1.0);
@@ -347,7 +386,7 @@ void Scene::render() {
 		glEnable(GL_LIGHT4);
 
 
-		glLightfv(GL_LIGHT5, GL_AMBIENT, Light_Ambient5);
+
 		glLightfv(GL_LIGHT5, GL_DIFFUSE, Light_Diffuse5);
 		glLightfv(GL_LIGHT5, GL_POSITION, Light_Position5);
 		glLightf(GL_LIGHT5, GL_CONSTANT_ATTENUATION, 1.0);
@@ -357,7 +396,7 @@ void Scene::render() {
 		//
 		//
 		//
-		glLightfv(GL_LIGHT6, GL_AMBIENT, Light_Ambient6);
+
 		glLightfv(GL_LIGHT6, GL_DIFFUSE, Light_Diffuse6);
 		glLightfv(GL_LIGHT6, GL_POSITION, Light_Position6);
 		glLightf(GL_LIGHT6, GL_CONSTANT_ATTENUATION, 1.0);
@@ -366,7 +405,6 @@ void Scene::render() {
 		glEnable(GL_LIGHT6);
 
 
-		glLightfv(GL_LIGHT7, GL_AMBIENT, Light_Ambient7);
 		glLightfv(GL_LIGHT7, GL_DIFFUSE, Light_Diffuse7);
 		glLightfv(GL_LIGHT7, GL_POSITION, Light_Position7);
 		glLightf(GL_LIGHT7, GL_CONSTANT_ATTENUATION, 1.0);

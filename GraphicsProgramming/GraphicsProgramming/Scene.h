@@ -96,11 +96,10 @@ protected:
 	bool FirstPerson = false;
 
 	//Sun floats
-	float SunX = 3.57f;
+	float SunX = 50.f;
 	float SunZ = 4.f;
 
-	float MoonX = 50;
-	float MoonZ = 4.f;
+
 
 	//Lights 
 	// 	// The possitions are inverted
@@ -115,15 +114,19 @@ protected:
 
 	// Sun light set up
 	GLfloat Light_Ambient3[4] = { 0.4f, 0.4f, 0.4f, 1.0f };
-	GLfloat Light_Position3[4] = { SunX,-3,SunZ, 1.0f };
+	GLfloat Light_Position3[4] = { 3.57,-3,SunZ, 1.0f };
 
-	// Moon light set up
+	//
+	// booleans and GLfloats to set the ambient light to Yellow red or blue
+	bool Yellow = true;
+	bool Red = false;
+	bool Green = false;
+	bool Dull = false;
 
-	GLfloat Light_Ambient1[4] = { 0.1f, 0.1f, 0.1f, 1.0f };
-	GLfloat Light_Position1[4] = { MoonX,-3,MoonZ, 1.0f };
 
-
-
+	GLfloat Red_Ambient[4] = { 0.9f,0.0f,0.9f,1.0f };
+	GLfloat Green_Ambient[4] = { 0.2f,0.9f,0.9f,1.0f };
+	GLfloat Dull_Ambient[4] = { 0.2f,0.2f,0.9f,1.0f };
 	// 
 	//Torch Lights 
 	// Torches on the Left wall 
@@ -171,11 +174,9 @@ protected:
 	GLfloat Spot_Direcion7[3] = { 0.0f, 1.0f,0.2f };
 
 
-
-
 	//Materials 
 	GLfloat no_mat[4] = { 0.0, 0.0, 0.0, 0.0 };
-	GLfloat mat_ambient_colour[4] = { 0.8, 0.8, 0.2, 1.0 };
+	GLfloat mat_ambient_colour[4] = { 0.8,0.8,0.2, 1.0 };
 	GLfloat mat_diff_red[4] = { 1.0, 0.0, 0.0, 1.0 };
 	GLfloat mat_diff_blue[4] = { 0.1, 0.5, 0.8, 1.0 };
 	GLfloat mat_specular[4] = { 1.0, 1.0, 1.0, 1.0 };
@@ -183,6 +184,7 @@ protected:
 	GLfloat low_shininess = 50;
 	GLfloat high_shininess = 100;
 	GLfloat mat_emission[4] = { 0.0, 0.0, 0.0, 0.0 };
+
 
 
 };
