@@ -310,6 +310,7 @@ void Scene::update(float dt)
 		{
 			if (ButtonMove < 0.05)
 			{
+				Planar_Shadow_Move += 0.01;
 				ButtonMove += 0.005;
 			}
 			ButtonTime = 0.3f;
@@ -530,6 +531,34 @@ void Scene::render() {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LIGHTING);
 	glPopMatrix();
+
+	glPushMatrix();
+	glDisable(GL_LIGHTING);
+	glColor3f(0, 0, 0);
+	glTranslatef(3.57, -1.84 + Planar_Shadow_Move, 1.5);
+	glRotatef(90, 1, 0, 0);
+	Disk.Calculate(0.5,50);
+	Disk.Render();
+	glPopMatrix();
+
+	glPushMatrix();
+	glDisable(GL_LIGHTING);
+	glColor3f(0, 0, 0);
+	glTranslatef(7.7, -1.84 + Planar_Shadow_Move, 4);
+	glRotatef(90, 1, 0, 0);
+	Disk.Calculate(0.5, 50);
+	Disk.Render();
+	glPopMatrix();
+
+	glPushMatrix();
+	glDisable(GL_LIGHTING);
+	glColor3f(0, 0, 0);
+	glTranslatef(3.57, -1.84 + Planar_Shadow_Move, 6.5);
+	glRotatef(90, 1, 0, 0);
+	Disk.Calculate(0.5, 50);
+	Disk.Render();
+	glPopMatrix();
+
 	glEnable(GL_LIGHTING);
 	glDisable(GL_COLOR_MATERIAL);
 
@@ -820,7 +849,7 @@ void Scene::render() {
 	glTranslatef(3 + ButtonMove, -1, 4);
 	glRotatef(90, 0, 1, 0);
 	glScalef(0.1, 0.1, 0.1);
-	Cylinder.Render(1,1,6);
+	Cylinder.Render(0.5,0.5,50);
 	glPopMatrix();
 
 	glPushMatrix();

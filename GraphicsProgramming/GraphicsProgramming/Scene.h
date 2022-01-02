@@ -78,6 +78,7 @@ protected:
 	int Seg = 1;
 	float Size = 0.15;
 	float ButtonMove = 0.005f;
+	float Planar_Shadow_Move = 0.01f;
 	float TimePassed = 3.f;
 	float ButtonTime = 0.3f;
 	bool SphereBool = false;
